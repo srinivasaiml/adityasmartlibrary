@@ -186,7 +186,7 @@
     }
     .branding-side::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--branding-bg); opacity: 0.85; transition: background-color 0.4s, opacity 0.4s; }
     body.dark-mode .branding-side::before { opacity: 0.7; }
-    .branding-content { position: relative; z-index: 1; }
+    .branding-content { position: relative; z-index: 1;top:-50px }
     .branding-side .logo-img { height: 450px; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
     .branding-side h1 { font-size: 2.5rem; margin: 0 0 10px 0; color: var(--form-text); }
     .branding-side p { font-size: 1.1rem; max-width: 400px; opacity: 0.9; }
@@ -214,7 +214,113 @@
     body.dark-mode .form-message.error { background-color: #58151c; color: #f5c6cb; }
     
     /* --- FOOTER STYLES (NEW) --- */
+    .site-footer {
+      text-align: center;
+      padding: 25px 15px;
+      background-color: var(--branding-bg); /* Matches the branding side for consistency */
+      color: #7f8c8d; /* A muted text color */
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-top: 1px solid var(--input-border); /* A subtle separator line */
+      transition: all 0.4s;
+    }
 
+    /* Ensure footer color changes with the theme */
+    body.dark-mode .site-footer {
+      color: #95a5a6;
+    }
+    .site-footer {
+      text-align: center;
+      padding: 25px 15px;
+      background-color: var(--branding-bg);
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-top: 1px solid var(--input-border);
+      transition: all 0.4s;
+    }
+
+    body.dark-mode .site-footer {
+      color: #95a5a6;
+    }
+    
+    .site-footer .footer-separator {
+      margin: 0 10px;
+      opacity: 0.5;
+    }
+
+    .details-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    .details-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+      color: white;
+      opacity: 1;
+    }
+
+    body.dark-mode .details-btn {
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+    }
+
+    body.dark-mode .details-btn:hover {
+      box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+    }
+    
+    
+    /* --- EXTREME SMALL SCREEN (UP TO 320px) --- */
+    @media (max-width: 350px) {
+      html { font-size: 13px; }
+      .branding-side { padding: 10px; min-height: 180px; }
+      .branding-side .logo-img { height: 120px; }
+      .branding-side h1 { font-size: 1.1rem; }
+      .branding-side p { font-size: 0.85rem; }
+      .form-side { padding: 10px 2px; }
+      .form-container { max-width: 98vw; padding: 0 2px; }
+      .form-container h2 { font-size: 1.1rem; }
+      .portal-button { font-size: 0.85rem; padding-bottom: 8px; }
+      .form-group { margin-bottom: 10px; }
+      .auth-form input { padding: 10px; font-size: 0.95rem; }
+      .form-submit-btn { padding: 10px; font-size: 1rem; }
+      .theme-toggle { top: 8px; right: 8px; font-size: 1.2rem; }
+      .form-message { font-size: 0.8rem; padding: 8px; }
+    }
+
+    /* --- MOBILE & TABLET: 375px to 720px --- */
+    @media (max-width: 720px) and (min-width: 375px) {
+      html { font-size: 15px; }
+      .split-screen-container { flex-direction: column; }
+      .branding-side, .form-side { width: 100%; }
+      .branding-side { min-height: 200px; padding: 18px; }
+      .branding-side .logo-img { height: 160px; }
+      .branding-side h1 { font-size: 1.4rem; }
+      .branding-side p { font-size: 1rem; }
+      .form-side { padding: 18px 6px; }
+      .form-container { max-width: 98vw; padding: 0 4px; }
+      .form-container h2 { font-size: 1.3rem; }
+      .portal-button { font-size: 0.95rem; padding-bottom: 10px; }
+      .form-group { margin-bottom: 14px; }
+      .auth-form input { padding: 12px; font-size: 1rem; }
+      .form-submit-btn { padding: 12px; font-size: 1.05rem; }
+      .theme-toggle { top: 10px; right: 10px; font-size: 1.3rem; }
+      .form-message { font-size: 0.9rem; padding: 10px; }
+      /* Make footer responsive for mobile */
+      .site-footer {
+        padding: 20px 10px;
+        font-size: 0.8rem;
+      }
+    }
 
     @media (max-width: 850px) {
       .split-screen-container { flex-direction: column; }
@@ -248,7 +354,9 @@
         <h1>Welcome to the Smart Library</h1>
        <center>
         <p>Your gateway to a universe of knowledge. Access thousands of books, journals, and digital resources anytime, anywhere.</p>
- 
+        <a href="test.html" class="details-btn">
+          🚀 View Our Extraordinary Team Journey
+        </a>
        </center></div>
     </section>
 
@@ -281,7 +389,14 @@
     </section>
   </div>
 
-
+  <footer class="site-footer">
+    <p>
+      © <span id="current-year">2024</span> Aditya Smart Library. 
+      <span class="footer-separator">|</span> 
+      Developed by AIML Students.
+    </p>
+    
+  </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -309,7 +424,7 @@
       // --- END PRELOADER LOGIC ---
 
       const App = {
-        config: { apiBaseUrl: 'https://smartlibrary-h80l.onrender.com/api' },
+        config: { apiBaseUrl: 'http://localhost:5001/api' },
         state: { currentPortal: 'student', isLoginView: true },
         ui: {
           body: document.body,
@@ -332,7 +447,13 @@
           formMessage: document.getElementById('form-message'),
           toggleLinkContainer: document.getElementById('form-toggle-link-container'),
         },
-        init() { this.initEventListeners(); this.applySavedTheme(); localStorage.removeItem('token'); localStorage.removeItem('user'); },
+        init() {
+          this.initEventListeners();
+          this.applySavedTheme();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          document.getElementById('current-year').textContent = new Date().getFullYear();
+        },
         initEventListeners() {
           this.ui.themeToggle.addEventListener('click', () => this.toggleTheme());
           this.ui.portalButtons.forEach(btn => btn.addEventListener('click', e => this.switchPortal(e.currentTarget.dataset.portal)));
