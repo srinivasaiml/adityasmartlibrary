@@ -1,448 +1,1405 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aditya Smart Library - Welcome</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      /* Theme Variables */
-      --form-bg: #ffffff;
-      --form-text: #2c3e50;
-      --branding-bg: #f4f7fc;
-      --branding-text: #34495e;
-      --primary-color: #e74c3c;
-      --primary-color-dark: #c0392b;
-      --input-border: #dfe6e9;
-      --input-bg: #fdfdfd;
-      --input-focus-border: var(--primary-color);
-      --link-color: var(--primary-color);
-
-      /* Dark Mode Overrides */
-      --form-bg-dark: #1e272e;
-      --form-text-dark: #ecf0f1;
-      --branding-bg-dark: #2c3e50;
-      --branding-text-dark: #bdc3c7;
-      --primary-color-dark-theme: #e74c3c;
-      --input-border-dark: #4a6375;
-      --input-bg-dark: #2c3e50;
-      --input-focus-border-dark: var(--primary-color-dark-theme);
-      --link-color-dark: var(--primary-color-dark-theme);
-    }
-
-    /* General */
-    html { box-sizing: border-box; font-size: 16px; }
-    *, *:before, *:after { box-sizing: inherit; }
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--form-bg);
-      color: var(--form-text);
-      transition: background-color 0.4s, color 0.4s;
-    }
-    body.dark-mode {
-      --form-bg: var(--form-bg-dark);
-      --form-text: var(--form-text-dark);
-      --branding-bg: var(--branding-bg-dark);
-      --branding-text: var(--branding-text-dark);
-      --primary-color: var(--primary-color-dark-theme);
-      --input-border: var(--input-border-dark);
-      --input-bg: var(--input-bg-dark);
-      --input-focus-border: var(--input-focus-border-dark);
-      --link-color: var(--link-color-dark);
-    }
-    h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
-    p { line-height: 1.6; }
-    a { color: var(--link-color); text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
-    a:hover { opacity: 0.8; }
-
-    /* Main Container */
-    .split-screen-container { display: flex; min-height: 100vh; }
-
-    /* Branding Side (Left) */
-    .branding-side {
-      width: 50%;
-      background-color: var(--branding-bg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 50px;
-      text-align: center;
-      color: var(--branding-text);
-      transition: background-color 0.4s;
-      background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1590&q=80');
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-    .branding-side::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: var(--branding-bg);
-      opacity: 0.85;
-      transition: background-color 0.4s, opacity 0.4s;
-    }
-    body.dark-mode .branding-side::before { opacity: 0.7; }
-    .branding-content { position: relative; z-index: 1; }
-    .branding-side .logo-img { height: 70px; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
-    .branding-side h1 { font-size: 2.5rem; margin: 0 0 10px 0; color: var(--form-text); }
-    .branding-side p { font-size: 1.1rem; max-width: 400px; opacity: 0.9; }
-    
-    /* Form Side (Right) */
-    .form-side {
-      width: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px;
-      position: relative;
-    }
-    .form-container { width: 100%; max-width: 400px; }
-    .form-container h2 { font-size: 2rem; margin-bottom: 10px; }
-    .form-container .subtitle { margin-bottom: 30px; color: #7f8c8d; }
-    body.dark-mode .form-container .subtitle { color: #95a5a6; }
-
-    /* Form Elements */
-    .form-group { margin-bottom: 20px; }
-    .auth-form label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; }
-    .auth-form input {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      background: var(--input-bg);
-      color: var(--form-text);
-      font-size: 1rem;
-      transition: all 0.3s;
-    }
-    .auth-form input:focus {
-      outline: none;
-      border-color: var(--input-focus-border);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-focus-border) 20%, transparent);
-    }
-    .form-submit-btn {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 8px;
-      background: var(--primary-color);
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.2s;
-    }
-    .form-submit-btn:hover:not(:disabled) { background: var(--primary-color-dark); transform: translateY(-2px); }
-    .form-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .form-toggle-link { text-align: center; margin-top: 25px; }
-    
-    /* Tab-like Portal Switcher */
-    .portal-switcher { display: flex; border-bottom: 2px solid var(--input-border); margin-bottom: 30px; }
-    .portal-button {
-      flex: 1; padding-bottom: 15px; border: none; background: none; color: var(--form-text);
-      opacity: 0.5; font-size: 1rem; font-weight: 600; cursor: pointer;
-      transition: opacity 0.3s, border-bottom 0.3s;
-      border-bottom: 3px solid transparent; margin-bottom: -2px;
-    }
-    .portal-button.active { opacity: 1; border-bottom-color: var(--primary-color); }
-    
-    /* Theme Toggle */
-    .theme-toggle { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 1.5rem; background: none; border: none; color: var(--form-text); }
-
-    /* Form Message Area */
-    .form-message { padding: 12px; margin-bottom: 15px; border-radius: 6px; font-size: 0.9rem; text-align: center; display: none; }
-    .form-message.success { background-color: #d4edda; color: #155724; }
-    .form-message.error { background-color: #f8d7da; color: #721c24; }
-    body.dark-mode .form-message.success { background-color: #1e4620; color: #a3e9a4; }
-    body.dark-mode .form-message.error { background-color: #58151c; color: #f5c6cb; }
-
-    /* Responsive Design */
-    @media (max-width: 850px) {
-      .split-screen-container { flex-direction: column; }
-      .branding-side, .form-side { width: 100%; }
-      .branding-side { min-height: 300px; padding: 30px; }
-      .form-side { padding: 40px 20px; }
-      .branding-side h1 { font-size: 2rem; }
-    }
-  </style>
-</head>
-<body class="light-mode">
-  
-  <div class="split-screen-container">
-    <!-- Left Side: Branding and Information -->
-    <section class="branding-side">
-      <div class="branding-content">
-        <img src="aditya.png" alt="Aditya Library Logo" class="logo-img">
-        <h1>Welcome to the Smart Library</h1>
-        <p>Your gateway to a universe of knowledge. Access thousands of books, journals, and digital resources anytime, anywhere.</p>
-      </div>
-    </section>
-
-    <!-- Right Side: Forms -->
-    <section class="form-side">
-      <button class="theme-toggle" id="theme-toggle">☀</button>
-      <div class="form-container">
-        <h2 id="form-title">Student Login</h2>
-        <p class="subtitle" id="form-subtitle">Please enter your credentials to proceed.</p>
-
-        <div class="portal-switcher">
-            <button class="portal-button active" data-portal="student">Student</button>
-            <button class="portal-button" data-portal="admin">Admin</button>
-        </div>
-
-        <div id="form-message" class="form-message"></div>
-
-        <!-- Login Form -->
-        <form id="login-form" class="auth-form active" novalidate>
-          <div class="form-group">
-            <label for="login-username" id="login-username-label">Student ID</label>
-            <input type="text" id="login-username" required>
-          </div>
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <input type="password" id="login-password" required>
-          </div>
-          <button type="submit" class="form-submit-btn" id="login-submit-btn">Login</button>
-        </form>
-
-        <!-- Signup Form (hidden by default) -->
-        <form id="signup-form" class="auth-form" style="display: none;" novalidate>
-          <div class="form-group">
-            <label for="signup-name">Full Name</label>
-            <input type="text" id="signup-name" required>
-          </div>
-          <div class="form-group">
-            <label for="signup-username" id="signup-username-label">Student ID</label>
-            <input type="text" id="signup-username" required>
-          </div>
-          <div class="form-group">
-            <label for="signup-password">Create Password</label>
-            <input type="password" id="signup-password" required>
-          </div>
-          <!-- ADDED: Confirm Password Field -->
-          <div class="form-group">
-            <label for="signup-confirm-password">Confirm Password</label>
-            <input type="password" id="signup-confirm-password" required>
-          </div>
-          <button type="submit" class="form-submit-btn" id="signup-submit-btn">Create Account</button>
-        </form>
-
-        <p class="form-toggle-link" id="form-toggle-link-container">
-          No account? <a href="#" id="toggle-link">Create one</a>
-        </p>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-      const App = {
-        config: { apiBaseUrl: 'https://smartlibrary-h80l.onrender.com/api' },
-        state: { currentPortal: 'student', isLoginView: true },
-        ui: {
-          body: document.body,
-          themeToggle: document.getElementById('theme-toggle'),
-          portalButtons: document.querySelectorAll('.portal-button'),
-          formTitle: document.getElementById('form-title'),
-          formSubtitle: document.getElementById('form-subtitle'),
-          loginForm: document.getElementById('login-form'),
-          signupForm: document.getElementById('signup-form'),
-          loginUsernameLabel: document.getElementById('login-username-label'),
-          signupUsernameLabel: document.getElementById('signup-username-label'),
-          loginUsername: document.getElementById('login-username'),
-          loginPassword: document.getElementById('login-password'),
-          loginSubmitBtn: document.getElementById('login-submit-btn'),
-          signupName: document.getElementById('signup-name'),
-          signupUsername: document.getElementById('signup-username'),
-          signupPassword: document.getElementById('signup-password'),
-          signupConfirmPassword: document.getElementById('signup-confirm-password'), // ADDED
-          signupSubmitBtn: document.getElementById('signup-submit-btn'),
-          formMessage: document.getElementById('form-message'),
-          toggleLinkContainer: document.getElementById('form-toggle-link-container'),
-        },
-
-        init() {
-          this.initEventListeners();
-          this.applySavedTheme();
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-        },
-
-        initEventListeners() {
-          this.ui.themeToggle.addEventListener('click', () => this.toggleTheme());
-          this.ui.portalButtons.forEach(btn => btn.addEventListener('click', e => this.switchPortal(e.currentTarget.dataset.portal)));
-          // This needs to be delegated because the link is dynamically replaced
-          this.ui.toggleLinkContainer.addEventListener('click', e => {
-            if (e.target.id === 'toggle-link') {
-              e.preventDefault();
-              this.toggleFormView();
-            }
-          });
-          this.ui.loginForm.addEventListener('submit', e => { e.preventDefault(); this.handleLogin(); });
-          this.ui.signupForm.addEventListener('submit', e => { e.preventDefault(); this.handleSignup(); });
-        },
-        
-        toggleTheme() {
-          this.ui.body.classList.toggle('dark-mode');
-          const isDarkMode = this.ui.body.classList.contains('dark-mode');
-          this.ui.themeToggle.textContent = isDarkMode ? '☾' : '☀';
-          localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-        },
-        applySavedTheme() {
-          const savedTheme = localStorage.getItem('theme') || 'light';
-          this.ui.body.classList.toggle('dark-mode', savedTheme === 'dark');
-          this.ui.themeToggle.textContent = savedTheme === 'dark' ? '☾' : '☀';
-        },
-        
-        updateFormUI() {
-            const portalName = this.state.currentPortal.charAt(0).toUpperCase() + this.state.currentPortal.slice(1);
-            const viewName = this.state.isLoginView ? 'Login' : 'Signup';
-
-            // FIXED: Using backticks for template literals
-            this.ui.formTitle.textContent = `${portalName} ${viewName}`;
-            this.ui.loginUsernameLabel.textContent = `${portalName} ID`;
-            this.ui.signupUsernameLabel.textContent = `${portalName} ID`;
-
-            const linkText = this.state.isLoginView ? 'Create one' : 'Login instead';
-            const promptText = this.state.isLoginView ? 'No account?' : 'Already have an account?';
-            this.ui.toggleLinkContainer.innerHTML = `${promptText} <a href="#" id="toggle-link">${linkText}</a>`;
-            
-            this.hideFormMessage();
-        },
-
-        switchPortal(portal) {
-          if (this.state.currentPortal === portal) return;
-          this.state.currentPortal = portal;
-          this.ui.portalButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.portal === portal));
-          this.updateFormUI();
-        },
-        
-        toggleFormView() {
-            this.state.isLoginView = !this.state.isLoginView;
-            this.ui.loginForm.style.display = this.state.isLoginView ? 'block' : 'none';
-            this.ui.signupForm.style.display = this.state.isLoginView ? 'none' : 'block';
-            this.updateFormUI();
-        },
-        
-        showFormMessage(message, type = 'error') {
-            const msgEl = this.ui.formMessage;
-            msgEl.textContent = message;
-            // FIXED: Using backticks for template literals
-            msgEl.className = `form-message ${type}`;
-            msgEl.style.display = 'block';
-        },
-        hideFormMessage() {
-            this.ui.formMessage.style.display = 'none';
-        },
-        // IMPROVED: Function now handles button text as well
-        setButtonState(button, text, disabled) {
-            button.textContent = text;
-            button.disabled = disabled;
-        },
-
-        async handleLogin() {
-          this.hideFormMessage();
-          const username = this.ui.loginUsername.value.trim();
-          const password = this.ui.loginPassword.value.trim();
-          if (!username || !password) return this.showFormMessage("Please fill in all fields.");
-          
-          const originalButtonText = this.ui.loginSubmitBtn.textContent;
-          this.setButtonState(this.ui.loginSubmitBtn, 'Logging in...', true);
-
-          try {
-            // FIXED: Using backticks for template literals
-            const response = await fetch(`${this.config.apiBaseUrl}/auth/login`, {
-              method: 'POST', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ username, password, isAdminLogin: this.state.currentPortal === 'admin' })
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || 'Login failed.');
-            
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data));
-            
-            this.showFormMessage('Success! Redirecting...', 'success');
-            setTimeout(() => {
-                window.location.href = (data.role === 'admin') ? 'admindashboard.html' : 'studentdashboard.html';
-            }, 1500);
-
-          } catch (error) {
-            this.showFormMessage(error.message);
-            this.setButtonState(this.ui.loginSubmitBtn, originalButtonText, false);
-          }
-        },
-
-        async handleSignup() {
-          this.hideFormMessage();
-          const name = this.ui.signupName.value.trim();
-          const username = this.ui.signupUsername.value.trim();
-          const password = this.ui.signupPassword.value;
-          const confirmPassword = this.ui.signupConfirmPassword.value; // ADDED
-
-          // IMPROVED: Added more validation
-          if (!name || !username || !password || !confirmPassword) {
-            return this.showFormMessage("Please fill all fields.");
-          }
-          if (password !== confirmPassword) {
-            return this.showFormMessage("Passwords do not match.");
-          }
-          if (password.length < 6) {
-            return this.showFormMessage("Password must be at least 6 characters.");
-          }
-
-          const originalButtonText = this.ui.signupSubmitBtn.textContent;
-          this.setButtonState(this.ui.signupSubmitBtn, 'Creating Account...', true);
-
-          try {
-            // FIXED: Using backticks for template literals
-            const response = await fetch(`${this.config.apiBaseUrl}/auth/register`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, username, password, role: this.state.currentPortal })
-            });
-            const data = await response.json();
-            // IMPROVED: More specific status check
-            if (response.status !== 201) {
-              throw new Error(data.message || 'Signup failed.');
-            }
-            
-            this.showFormMessage('Account created! Please log in.', 'success');
-            setTimeout(() => {
-                this.toggleFormView();
-                this.ui.loginUsername.value = username;
-                this.ui.loginPassword.focus();
-                this.hideFormMessage();
-            }, 2000);
-
-          } catch (error) {
-            this.showFormMessage(error.message);
-          } finally {
-            // IMPROVED: Button state is reset even if an error occurs
-            this.setButtonState(this.ui.signupSubmitBtn, originalButtonText, false);
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Team Showcase - Advanced</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.8);
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(75, 85, 99, 0.3);
+            --glow: rgba(99, 102, 241, 0.5);
         }
-      };
 
-      App.init();
-    });
-  </script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #1e1b4b 50%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.7;
+        }
+
+        /* Enhanced Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--bg-primary), var(--primary-dark));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+            animation: loadingPulse 2s ease-in-out infinite;
+        }
+
+        .loading-logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(99, 102, 241, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Background Effects */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: float 20s infinite linear;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent);
+            top: 60%;
+            right: 20%;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1), transparent);
+            bottom: 20%;
+            left: 60%;
+            animation-delay: 10s;
+        }
+
+        /* Grid Pattern */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Header */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            animation: slideDown 1s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            animation: slideUp 1s ease-out 0.6s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1rem;
+            animation: slideUp 1s ease-out 0.9s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow {
+            width: 24px;
+            height: 24px;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: rotate(45deg);
+        }
+
+        /* Enhanced Stats Grid */
+        .stats-section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 50px rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px var(--glow));
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Section Headers */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Team Cards */
+        .team-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .guide-grid {
+            grid-template-columns: 1fr;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .mentors-grid {
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        }
+
+        .members-grid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+            transform-origin: left;
+        }
+
+        .team-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .team-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Avatar Styles */
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: all 0.5s ease;
+            border: 4px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            padding: 4px;
+            background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+            border-radius: 50%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: exclude;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        .guide-card .avatar {
+            width: 180px;
+            height: 180px;
+        }
+
+        .guide-card .avatar::before {
+            background: linear-gradient(45deg, var(--warning), var(--primary));
+        }
+
+        .mentor-card .avatar {
+            width: 160px;
+            height: 160px;
+        }
+
+        .mentor-card .avatar::before {
+            background: linear-gradient(45deg, var(--success), var(--accent));
+        }
+
+        .team-card:hover .avatar {
+            transform: scale(1.1);
+        }
+
+        /* Card Content */
+        .card-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-role {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-role {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+            color: var(--bg-primary);
+        }
+
+        .mentor-role {
+            background: linear-gradient(135deg, var(--success), #34d399);
+            color: var(--bg-primary);
+        }
+
+        .member-role {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .card-info {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            space-y: 0.5rem;
+        }
+
+        .card-info p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .card-info strong {
+            color: var(--text-primary);
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Project Summary */
+        .project-section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .project-summary {
+            background: var(--bg-card);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .project-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .tech-item {
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-weight: 600;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .tech-item:hover::before {
+            left: 100%;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            color: var(--primary);
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            z-index: 1000;
+            transform-origin: left;
+            transition: transform 0.1s ease;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .fab.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fab:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Animations */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes borderRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .hero-title { font-size: 3rem; }
+            .section-title { font-size: 2.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .mentors-grid, .members-grid { grid-template-columns: 1fr; }
+            .team-card { padding: 2rem 1.5rem; }
+            .project-summary { padding: 2rem; }
+            .tech-stack { gap: 0.75rem; }
+            .tech-item { padding: 0.75rem 1rem; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero-cta { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 280px; }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --border: rgba(255, 255, 255, 0.6);
+                --bg-card: rgba(0, 0, 0, 0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">SHOWCASE</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Amazing Team</div>
+        </div>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="grid-pattern"></div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">🎉 Internship Success Story</div>
+                <h1 class="hero-title">Extraordinary Team Journey</h1>
+                <p class="hero-subtitle">
+                    Celebrating 6 months of innovation, collaboration, and exceptional achievements 
+                    with our incredible team of visionary developers and designers.
+                </p>
+                <div class="hero-cta">
+                    <a href="#team" class="btn btn-primary">Meet Our Team</a>
+                    <a href="#project" class="btn btn-secondary">View Project</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Impact</h2>
+                <p class="section-subtitle">Numbers that define our successful journey</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number" data-target="10">0</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number" data-target="6">0</div>
+                    <div class="stat-label">Months Duration</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon">💻</div>
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">Technologies Used</div>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-number" data-target="100">0</div>
+                    <div class="stat-label">Success Rate (%)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guide Section -->
+    <section class="section" id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Project Guide</h2>
+                <p class="section-subtitle">Leading our journey with wisdom and expertise</p>
+            </div>
+            <div class="team-grid guide-grid">
+                <div class="team-card guide-card" data-aos="zoom-in">
+                    <div class="avatar-container">
+                        <div class="avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616c0763c14?w=400&h=400&fit=crop&crop=face')"></div>
+                    </div>
+                    <h3 class="card-name">Dr. Sarah Johnson</h3>
+                    <div class="card-role guide-role">Project Guide</div>
+                    <div class="card-info">
+                        <p><strong>Department:</strong> Computer Science Engineering</p>
+                        <p><strong>Experience:</strong> 15+ Years in Academia & Industry</p>
+                        <p><strong>Expertise:</strong> Full Stack Development, AI/ML, System Architecture</p>
+                        <p><strong>Focus:</strong> Strategic Planning & Technical Excellence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Mentors</h2>
+                <p class="section-subtitle">Industry experts guiding our technical growth</p>
+            </div>
+            <div class="team-grid mentors-grid" id="mentorsGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Members Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Team Members</h2>
+                <p class="section-subtitle">The brilliant minds behind our success</p>
+            </div>
+            <div class="team-grid members-grid" id="membersGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Section -->
+    <section class="section project-section" id="project">
+        <div class="container">
+            <div class="project-summary" data-aos="fade-up">
+                <h2 class="project-title">Our Journey</h2>
+                <p class="project-description">
+                    An extraordinary 6-month journey of innovation, collaboration, and technical excellence. 
+                    Our team successfully delivered a cutting-edge solution that exceeded all expectations, 
+                    showcasing the power of teamwork and dedication in the world of technology.
+                </p>
+                <div class="tech-stack">
+                    <div class="tech-item">React.js</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">MongoDB</div>
+                    <div class="tech-item">Express.js</div>
+                    <div class="tech-item">AWS Cloud</div>
+                    <div class="tech-item">Docker</div>
+                    <div class="tech-item">Kubernetes</div>
+                    <div class="tech-item">CI/CD Pipeline</div>
+                    <div class="tech-item">Jest Testing</div>
+                    <div class="tech-item">Figma Design</div>
+                    <div class="tech-item">Git/GitHub</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="scrollToTop" aria-label="Scroll to top">↑</button>
+
+    <script>
+        // Team Data
+        const mentors = [
+            {
+                name: "Alex Chen",
+                role: "Senior Technical Mentor",
+                company: "Tech Innovations Corp",
+                experience: "8+ Years",
+                expertise: "Frontend Architecture, React Ecosystem, Performance Optimization",
+                focus: "Code Quality & Best Practices",
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "Maria Rodriguez",
+                role: "Backend Systems Mentor", 
+                company: "Cloud Solutions Inc",
+                experience: "10+ Years",
+                expertise: "Backend Development, Cloud Architecture, Database Design",
+                focus: "System Scalability & Security",
+                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face"
+            }
+        ];
+
+        const teamMembers = [
+            {
+                name: "John Smith",
+                role: "Team Lead & Full Stack Developer",
+                skills: ["React", "Node.js", "Leadership", "Project Management", "AWS"],
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "Emily Davis", 
+                role: "Frontend Developer & UI/UX Designer",
+                skills: ["React", "TypeScript", "UI/UX Design", "Figma", "Animation"],
+                image: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "Michael Brown",
+                role: "Backend Developer",
+                skills: ["Python", "Django", "PostgreSQL", "API Development", "Redis"],
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "Lisa Wilson",
+                role: "Full Stack Developer & DevOps",
+                skills: ["MERN Stack", "AWS", "Docker", "CI/CD", "Monitoring"],
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "David Lee",
+                role: "UI/UX Designer & Frontend Developer", 
+                skills: ["Figma", "Design Systems", "React", "CSS/SCSS", "Prototyping"],
+                image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "Sophie Turner",
+                role: "QA Engineer & Automation Specialist",
+                skills: ["Jest Testing", "Selenium", "Automation", "Quality Assurance", "Cypress"],
+                image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face"
+            },
+            {
+                name: "James Wilson",
+                role: "DevOps Engineer & System Administrator",
+                skills: ["Docker", "Kubernetes", "CI/CD", "AWS Infrastructure", "Terraform"],
+                image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=face"
+            }
+        ];
+
+        // Global variables
+        let cursorTrails = [];
+        let isLoaded = false;
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Start loading sequence
+            setTimeout(() => {
+                hideLoadingScreen();
+                initializeFeatures();
+            }, 2000);
+        }
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                isLoaded = true;
+            }, 800);
+        }
+
+        function initializeFeatures() {
+            initCustomCursor();
+            populateTeamData();
+            initScrollEffects();
+            initAnimationObserver();
+            initCounterAnimations();
+            initSmoothScrolling();
+            initParallaxEffects();
+        }
+
+        // Custom Cursor
+        function initCustomCursor() {
+            const cursor = document.getElementById('cursor');
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Create trail effect
+                createCursorTrail(mouseX, mouseY);
+            });
+
+            function animateCursor() {
+                const dx = mouseX - cursorX;
+                const dy = mouseY - cursorY;
+                
+                cursorX += dx * 0.1;
+                cursorY += dy * 0.1;
+                
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Cursor interactions
+            document.querySelectorAll('a, button, .team-card, .stat-card, .tech-item').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(2)';
+                    cursor.style.opacity = '0.8';
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursor.style.opacity = '1';
+                });
+            });
+        }
+
+        function createCursorTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            document.body.appendChild(trail);
+
+            setTimeout(() => {
+                trail.style.opacity = '0';
+                trail.style.transform = 'scale(0)';
+                setTimeout(() => trail.remove(), 300);
+            }, 100);
+        }
+
+        // Populate Team Data
+        function populateTeamData() {
+            populateMentors();
+            populateMembers();
+        }
+
+        function populateMentors() {
+            const grid = document.getElementById('mentorsGrid');
+            mentors.forEach((mentor, index) => {
+                const card = createMentorCard(mentor, index);
+                grid.appendChild(card);
+            });
+        }
+
+        function populateMembers() {
+            const grid = document.getElementById('membersGrid');
+            teamMembers.forEach((member, index) => {
+                const card = createMemberCard(member, index);
+                grid.appendChild(card);
+            });
+        }
+
+        function createMentorCard(mentor, index) {
+            const card = document.createElement('div');
+            card.className = 'team-card mentor-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (index * 200).toString());
+            
+            card.innerHTML = `
+                <div class="avatar-container">
+                    <div class="avatar" style="background-image: url('${mentor.image}')"></div>
+                </div>
+                <h3 class="card-name">${mentor.name}</h3>
+                <div class="card-role mentor-role">${mentor.role}</div>
+                <div class="card-info">
+                    <p><strong>Company:</strong> ${mentor.company}</p>
+                    <p><strong>Experience:</strong> ${mentor.experience}</p>
+                    <p><strong>Expertise:</strong> ${mentor.expertise}</p>
+                    <p><strong>Focus:</strong> ${mentor.focus}</p>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function createMemberCard(member, index) {
+            const card = document.createElement('div');
+            card.className = 'team-card member-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (index * 100).toString());
+            
+            const skillsHTML = member.skills.map(skill => 
+                `<div class="skill-tag">${skill}</div>`
+            ).join('');
+            
+            card.innerHTML = `
+                <div class="avatar-container">
+                    <div class="avatar" style="background-image: url('${member.image}')"></div>
+                </div>
+                <h3 class="card-name">${member.name}</h3>
+                <div class="card-role member-role">${member.role}</div>
+                <div class="skills-container">${skillsHTML}</div>
+            `;
+            
+            return card;
+        }
+
+        // Scroll Effects
+        function initScrollEffects() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollToTop = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.offsetHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                
+                scrollProgress.style.transform = `scaleX(${scrollPercent / 100})`;
+                
+                // Show/hide scroll to top button
+                if (scrollTop > 500) {
+                    scrollToTop.classList.add('visible');
+                } else {
+                    scrollToTop.classList.remove('visible');
+                }
+            });
+            
+            // Scroll to top functionality
+            scrollToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Animation Observer
+        function initAnimationObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // Add stagger effect for grid items
+                        if (entry.target.classList.contains('stat-card') || 
+                            entry.target.classList.contains('team-card')) {
+                            entry.target.style.animationDelay = '0s';
+                            entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe all animated elements
+            document.querySelectorAll('.stat-card, .team-card, .project-summary').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.8s ease-out';
+                observer.observe(el);
+            });
+        }
+
+        // Counter Animations
+        function initCounterAnimations() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            let current = 0;
+            const increment = target / 60;
+            const duration = 2000;
+            const stepTime = duration / 60;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, stepTime);
+        }
+
+        // Smooth Scrolling
+        function initSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Parallax Effects
+        function initParallaxEffects() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                // Move floating orbs
+                document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+                
+                // Hero parallax
+                const hero = document.querySelector('.hero-section');
+                if (hero) {
+                    hero.style.transform = `translateY(${rate}px)`;
+                }
+            });
+        }
+
+        // Enhanced interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effect to buttons
+            document.querySelectorAll('.btn, .team-card, .stat-card').forEach(element => {
+                element.addEventListener('click', createRipple);
+            });
+            
+            // Tech stack interactions
+            document.querySelectorAll('.tech-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.05)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Card tilt effects
+            document.querySelectorAll('.team-card').forEach(card => {
+                card.addEventListener('mousemove', handleCardTilt);
+                card.addEventListener('mouseleave', resetCardTilt);
+            });
+        });
+
+        function createRipple(event) {
+            const element = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(element.clientWidth, element.clientHeight);
+            const radius = diameter / 2;
+            
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - element.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - element.offsetTop - radius}px`;
+            circle.classList.add('ripple');
+            
+            const ripple = element.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+            
+            element.appendChild(circle);
+        }
+
+        function handleCardTilt(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+        }
+
+        function resetCardTilt(e) {
+            const card = e.currentTarget;
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+        }
+
+        // Performance optimization
+        let ticking = false;
+        
+        function optimizedScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    // Any scroll-dependent animations go here
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', optimizedScroll);
+
+        // Console message
+        console.log('🚀 Advanced Team Showcase Loaded Successfully!');
+        console.log('✨ Features: Custom cursor, smooth animations, parallax effects, and more!');
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-background: linear-gradient(to bottom, #e5e1ef 40%, #37374b 100%); padding: 25px 28px 5px 28px;
