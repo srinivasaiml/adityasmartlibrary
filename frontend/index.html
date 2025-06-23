@@ -398,7 +398,7 @@
     
   </footer>
 
-  <script>
+   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
       // --- PRELOADER HIDING LOGIC (3-SECOND MINIMUM) ---
@@ -424,7 +424,7 @@
       // --- END PRELOADER LOGIC ---
 
       const App = {
-        config: { apiBaseUrl: 'http://localhost:5001/api' },
+        config: { apiBaseUrl: 'https://smartlibrary-h80l.onrender.com/api' },
         state: { currentPortal: 'student', isLoginView: true },
         ui: {
           body: document.body,
@@ -447,13 +447,7 @@
           formMessage: document.getElementById('form-message'),
           toggleLinkContainer: document.getElementById('form-toggle-link-container'),
         },
-        init() {
-          this.initEventListeners();
-          this.applySavedTheme();
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          document.getElementById('current-year').textContent = new Date().getFullYear();
-        },
+        init() { this.initEventListeners(); this.applySavedTheme(); localStorage.removeItem('token'); localStorage.removeItem('user'); },
         initEventListeners() {
           this.ui.themeToggle.addEventListener('click', () => this.toggleTheme());
           this.ui.portalButtons.forEach(btn => btn.addEventListener('click', e => this.switchPortal(e.currentTarget.dataset.portal)));
@@ -545,6 +539,7 @@
       App.init();
     });
   </script>
+
 
 </body>
 </html>
