@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -455,7 +454,7 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(99, 102, 241, 0.3);
         }
 
-        /* Avatar Styles */
+        /* ====== CORRECTED Avatar Styles ====== */
         .avatar-container {
             position: relative;
             display: inline-block;
@@ -466,24 +465,34 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background-size: cover;
-            background-position: center;
             position: relative;
             transition: all 0.5s ease;
-            border: 4px solid transparent;
-            background-clip: padding-box;
+            border: 4px solid transparent; /* Keeps the space for the gradient */
+            overflow: hidden; /* Crucial: Clips the img to the rounded border */
         }
-
+        
+        /* This pseudo-element now correctly creates the border effect */
         .avatar::before {
             content: '';
             position: absolute;
-            inset: -4px;
+            inset: -4px; /* Covers the border area */
             padding: 4px;
             background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
             border-radius: 50%;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: exclude;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); /* Added for Firefox */
+            -webkit-mask-composite: xor; /* 'xor' is the standard equivalent of 'exclude' */
+            mask-composite: exclude; /* Standard property */
             animation: borderRotate 3s linear infinite;
+            z-index: -1; /* Place the border behind the image content */
+        }
+        
+        /* Style the actual image tag */
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Replicates background-size: cover */
+            object-position: center; /* Replicates background-position: center */
         }
 
         .guide-card .avatar {
@@ -583,6 +592,50 @@
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Team Leader Ribbon CSS */
+        .team-leader-card .ribbon-container {
+            position: absolute;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            top: -10px;
+            left: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1; 
+        }
+
+        .team-leader-card .ribbon-container::before {
+            content: 'Team Lead';
+            position: absolute;
+            width: 150%;
+            height: 40px;
+            background-image: linear-gradient(45deg, var(--primary) 0%, var(--primary-dark) 51%, var(--primary) 100%);
+            transform: rotate(-45deg) translateY(-20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        .team-leader-card .ribbon-container::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            bottom: 0;
+            left: 0;
+            height: 10px;
+            z-index: -1;
+            box-shadow: 140px -140px var(--primary-dark);
+            background-image: linear-gradient(45deg, var(--primary-dark) 0%, #3730a3 51%, var(--primary-dark) 100%);
         }
 
         /* Project Summary */
@@ -892,7 +945,10 @@
             <div class="team-grid guide-grid">
                 <div class="team-card guide-card" data-aos="zoom-in">
                     <div class="avatar-container">
-                        <div class="avatar" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616c0763c14?w=400&h=400&fit=crop&crop=face')"></div>
+                        <!-- ====== CORRECTED HTML for Guide ====== -->
+                        <div class="avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face" alt="Dr. Sarah Johnson">
+                        </div>
                     </div>
                     <h3 class="card-name">Dr. Sarah Johnson</h3>
                     <div class="card-role guide-role">Project Guide</div>
@@ -1146,6 +1202,7 @@
             });
         }
 
+        // ====== CORRECTED JavaScript Function for Mentors ======
         function createMentorCard(mentor, index) {
             const card = document.createElement('div');
             card.className = 'team-card mentor-card';
@@ -1154,7 +1211,9 @@
             
             card.innerHTML = `
                 <div class="avatar-container">
-                    <div class="avatar" style="background-image: url('${mentor.image}')"></div>
+                    <div class="avatar">
+                        <img src="${mentor.image}" alt="${mentor.name}">
+                    </div>
                 </div>
                 <h3 class="card-name">${mentor.name}</h3>
                 <div class="card-role mentor-role">${mentor.role}</div>
@@ -1169,9 +1228,16 @@
             return card;
         }
 
+        // ====== CORRECTED JavaScript Function for Members ======
         function createMemberCard(member, index) {
             const card = document.createElement('div');
             card.className = 'team-card member-card';
+            
+            // Add a specific class for the Team Leader
+            if (member.role.includes('Team Lead')) {
+                card.classList.add('team-leader-card');
+            }
+
             card.setAttribute('data-aos', 'fade-up');
             card.setAttribute('data-aos-delay', (index * 100).toString());
             
@@ -1179,9 +1245,15 @@
                 `<div class="skill-tag">${skill}</div>`
             ).join('');
             
+            // Conditionally add the ribbon HTML for the Team Leader
+            const ribbonHTML = member.role.includes('Team Lead') ? '<span class="ribbon-container"></span>' : '';
+            
             card.innerHTML = `
+                ${ribbonHTML}
                 <div class="avatar-container">
-                    <div class="avatar" style="background-image: url('${member.image}')"></div>
+                    <div class="avatar">
+                        <img src="${member.image}" alt="${member.name}">
+                    </div>
                 </div>
                 <h3 class="card-name">${member.name}</h3>
                 <div class="card-role member-role">${member.role}</div>
@@ -1400,42 +1472,6 @@
         // Console message
         console.log('🚀 Advanced Team Showcase Loaded Successfully!');
         console.log('✨ Features: Custom cursor, smooth animations, parallax effects, and more!');
-
-
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-  // Disable key combinations
-  document.addEventListener('keydown', function (e) {
-    // F12
-    if (e.key === 'F12' || e.keyCode === 123) {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+Shift+I/J/C
-    if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+U
-    if (e.ctrlKey && e.key.toUpperCase() === 'U') {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+S (to block save page)
-    if (e.ctrlKey && e.key.toUpperCase() === 'S') {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+P (to block print)
-    if (e.ctrlKey && e.key.toUpperCase() === 'P') {
-      e.preventDefault();
-      return false;
-    }
-  });
     </script>
 </body>
 </html>
