@@ -609,7 +609,7 @@
         }
 
         .team-leader-card .ribbon-container::before {
-            content: 'Team Lead';
+            content: 'TEAM LEAD';
             position: absolute;
             width: 150%;
             height: 40px;
@@ -636,6 +636,50 @@
             z-index: -1;
             box-shadow: 140px -140px var(--primary-dark);
             background-image: linear-gradient(45deg, var(--primary-dark) 0%, #3730a3 51%, var(--primary-dark) 100%);
+        }
+
+        /* <!-- MODIFIED --> Project Guide Ribbon CSS */
+        .project-guide-card .ribbon-container {
+            position: absolute;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            top: -10px;
+            left: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1; 
+        }
+
+        .project-guide-card .ribbon-container::before {
+            content: 'GUIDE';
+            position: absolute;
+            width: 150%;
+            height: 40px;
+            background-image: linear-gradient(45deg, var(--warning) 0%, #d97706 51%, var(--warning) 100%);
+            transform: rotate(-45deg) translateY(-20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        .project-guide-card .ribbon-container::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            bottom: 0;
+            left: 0;
+            height: 10px;
+            z-index: -1;
+            box-shadow: 140px -140px #b45309; /* Darker fold color */
+            background-image: linear-gradient(45deg, #d97706 0%, #92400e 51%, #d97706 100%);
         }
 
         /* Project Summary */
@@ -889,7 +933,7 @@
                 <div class="hero-badge">🎉 Internship Success Story</div>
                 <h1 class="hero-title">Extraordinary Team Journey</h1>
                 <p class="hero-subtitle">
-                    Celebrating 6 months of innovation, collaboration, and exceptional achievements 
+                    Celebrating 2 months of innovation, collaboration, and exceptional achievements 
                     with our incredible team of visionary developers and designers.
                 </p>
                 <div class="hero-cta">
@@ -943,9 +987,10 @@
                 <p class="section-subtitle">Leading our journey with wisdom and expertise</p>
             </div>
             <div class="team-grid guide-grid">
-                <div class="team-card guide-card" data-aos="zoom-in">
+                <!-- <!-- MODIFIED --> Guide card updated with new class and ribbon div -->
+                <div class="team-card guide-card project-guide-card" data-aos="zoom-in">
+                    <div class="ribbon-container"></div>
                     <div class="avatar-container">
-                        <!-- ====== CORRECTED HTML for Guide ====== -->
                         <div class="avatar">
                             <img src="veeraswami.jpeg" alt="D.Veeraswamy">
                         </div>
@@ -995,7 +1040,7 @@
             <div class="project-summary" data-aos="fade-up">
                 <h2 class="project-title">Our Journey</h2>
                 <p class="project-description">
-                    An extraordinary 6-month journey of innovation, collaboration, and technical excellence. 
+                    An extraordinary 2-month journey of innovation, collaboration, and technical excellence. 
                     Our team successfully delivered a cutting-edge solution that exceeded all expectations, 
                     showcasing the power of teamwork and dedication in the world of technology.
                 </p>
@@ -1006,10 +1051,6 @@
                     <div class="tech-item">MongoDB</div>
                     <div class="tech-item">Express.js</div>
                     <div class="tech-item">AWS Cloud</div>
-                    <div class="tech-item">Docker</div>
-                    <div class="tech-item">Kubernetes</div>
-                    <div class="tech-item">CI/CD Pipeline</div>
-                    <div class="tech-item">Jest Testing</div>
                     <div class="tech-item">Figma Design</div>
                     <div class="tech-item">Git/GitHub</div>
                 </div>
@@ -1026,7 +1067,7 @@
             {
                 name: "A.Sneha",
                 role: "Assistant Professor",
-                department : "Information Technology",
+                Department : "Information Technology",
                 experience: "5+ Years",
                 expertise: "Frontend Architecture, Performance Optimization",
                 focus: "Code Quality & Best Practices",
@@ -1035,7 +1076,7 @@
             {
                 name: "K N S L Kumar",
                 role: "Assistant Professor", 
-                department: "Artificial Intelligence & Machine Learning",
+                Department: "Artificial Intelligence & Machine Learning",
                 experience: "10+ Years",
                 expertise: "Backend Development, Cloud Architecture, Database Design",
                 focus: "System Scalability & Security",
@@ -1044,12 +1085,13 @@
         ];
 
         const teamMembers = [
-    {
-        name: "Srinivas Patchipala",
-        role: "Team Lead & Full Stack Developer",
-        skills: ["React", "Node.js", "Leadership", "Project Management", "Git"],
-        image : "vasu.jpg",   
-    },
+            {
+                // MODIFIED: Updated role to trigger the ribbon logic
+                name: "Srinivas Patchipala",
+                role: "Team Lead & Full Stack Developer",
+                skills: ["React", "Node.js", "Leadership", "Project Management", "Git"],
+                image : "vasu.jpg",   
+            },
             {
                 name: "Abhishek Cherukothota", 
                 role: "Frontend Developer & UI/UX Designer",
@@ -1059,7 +1101,7 @@
             {
                 name: "Srikanth Tatapudi",
                 role: "Backend Developer",
-                skills: ["Python", "Django", "PostgreSQL", "API Development", "Redis"],
+                skills: ["Python", "Django", "Mongodb", "API Development", "React"],
                 image: "sri.jpg"
             },
             {
@@ -1076,14 +1118,14 @@
             },
             {
                 name: "Lakshmi Lavanya Kumpatla",
-                role: "QA Engineer & Automation Specialist",
-                skills: ["Jest Testing", "Selenium", "Automation", "Quality Assurance", "Cypress"],
-                image: "lavs.jpg"
+                role: "UI/UX Designer & Frontend Developer", 
+                skills: ["Figma", "Design Systems", "React", "CSS/SCSS", "Prototyping"],
+                 image: "lavs.jpg"
             },
             {
                 name: "Vyshnavi Maripi",
-                role: "DevOps Engineer & System Administrator",
-                skills: ["Docker", "Kubernetes", "CI/CD", "AWS Infrastructure", "Terraform"],
+               role: "UI/UX Designer & Frontend Developer", 
+                skills: ["Figma", "Design Systems", "React", "CSS/SCSS", "Prototyping"],
                 image: "vyshu.jpg"
             }
         ];
@@ -1202,7 +1244,6 @@
             });
         }
 
-        // ====== CORRECTED JavaScript Function for Mentors ======
         function createMentorCard(mentor, index) {
             const card = document.createElement('div');
             card.className = 'team-card mentor-card';
@@ -1218,7 +1259,7 @@
                 <h3 class="card-name">${mentor.name}</h3>
                 <div class="card-role mentor-role">${mentor.role}</div>
                 <div class="card-info">
-                    <p><strong>Company:</strong> ${mentor.company}</p>
+                    <p><strong>Department:</strong> ${mentor.Department}</p>
                     <p><strong>Experience:</strong> ${mentor.experience}</p>
                     <p><strong>Expertise:</strong> ${mentor.expertise}</p>
                     <p><strong>Focus:</strong> ${mentor.focus}</p>
@@ -1228,12 +1269,10 @@
             return card;
         }
 
-        // ====== CORRECTED JavaScript Function for Members ======
         function createMemberCard(member, index) {
             const card = document.createElement('div');
             card.className = 'team-card member-card';
             
-            // Add a specific class for the Team Leader
             if (member.role.includes('Team Lead')) {
                 card.classList.add('team-leader-card');
             }
@@ -1245,8 +1284,8 @@
                 `<div class="skill-tag">${skill}</div>`
             ).join('');
             
-            // Conditionally add the ribbon HTML for the Team Leader
-            const ribbonHTML = member.role.includes('Team Lead') ? '<span class="ribbon-container"></span>' : '';
+            // MODIFIED: Changed span to div for consistency
+            const ribbonHTML = member.role.includes('Team Lead') ? '<div class="ribbon-container"></div>' : '';
             
             card.innerHTML = `
                 ${ribbonHTML}
@@ -1275,7 +1314,6 @@
                 
                 scrollProgress.style.transform = `scaleX(${scrollPercent / 100})`;
                 
-                // Show/hide scroll to top button
                 if (scrollTop > 500) {
                     scrollToTop.classList.add('visible');
                 } else {
@@ -1283,7 +1321,6 @@
                 }
             });
             
-            // Scroll to top functionality
             scrollToTop.addEventListener('click', () => {
                 window.scrollTo({
                     top: 0,
@@ -1300,7 +1337,6 @@
                         entry.target.style.opacity = '1';
                         entry.target.style.transform = 'translateY(0)';
                         
-                        // Add stagger effect for grid items
                         if (entry.target.classList.contains('stat-card') || 
                             entry.target.classList.contains('team-card')) {
                             entry.target.style.animationDelay = '0s';
@@ -1313,7 +1349,6 @@
                 rootMargin: '0px 0px -50px 0px'
             });
 
-            // Observe all animated elements
             document.querySelectorAll('.stat-card, .team-card, .project-summary').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
@@ -1378,13 +1413,11 @@
                 const scrolled = window.pageYOffset;
                 const rate = scrolled * -0.5;
                 
-                // Move floating orbs
                 document.querySelectorAll('.floating-orb').forEach((orb, index) => {
                     const speed = 0.5 + (index * 0.1);
                     orb.style.transform = `translateY(${scrolled * speed}px)`;
                 });
                 
-                // Hero parallax
                 const hero = document.querySelector('.hero-section');
                 if (hero) {
                     hero.style.transform = `translateY(${rate}px)`;
@@ -1392,14 +1425,11 @@
             });
         }
 
-        // Enhanced interactions
         document.addEventListener('DOMContentLoaded', function() {
-            // Add ripple effect to buttons
             document.querySelectorAll('.btn, .team-card, .stat-card').forEach(element => {
                 element.addEventListener('click', createRipple);
             });
             
-            // Tech stack interactions
             document.querySelectorAll('.tech-item').forEach(item => {
                 item.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-8px) scale(1.05)';
@@ -1410,7 +1440,6 @@
                 });
             });
             
-            // Card tilt effects
             document.querySelectorAll('.team-card').forEach(card => {
                 card.addEventListener('mousemove', handleCardTilt);
                 card.addEventListener('mouseleave', resetCardTilt);
@@ -1454,13 +1483,11 @@
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
         }
 
-        // Performance optimization
         let ticking = false;
         
         function optimizedScroll() {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    // Any scroll-dependent animations go here
                     ticking = false;
                 });
                 ticking = true;
@@ -1469,7 +1496,6 @@
         
         window.addEventListener('scroll', optimizedScroll);
 
-        // Console message
         console.log('🚀 Advanced Team Showcase Loaded Successfully!');
         console.log('✨ Features: Custom cursor, smooth animations, parallax effects, and more!');
     </script>
