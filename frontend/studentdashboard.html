@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* === Unified CSS Variables from Admin Theme === */
+        /* === Unified CSS Variables === */
         :root {
             --primary-color: #008080; /* Main Teal Accent */
             --card-bg-color: #FFFFFF;
@@ -25,12 +25,10 @@
             --border-color: #E9ECEF;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             --font-family: 'Poppins', sans-serif;
-
-            /* === NEW: Centralized Theme Colors === */
-            --seats-theme-bg: #e0f2f1;      /* Light Teal */
-            --seats-theme-accent: #008080;   /* Dark Teal */
-            --books-theme-bg: #fdfaf3;      /* Warm, light sandy color */
-            --books-theme-accent: #D2B48C;   /* Tan color for accent */
+            --seats-theme-bg: #e0f2f1;
+            --seats-theme-accent: #008080;
+            --books-theme-bg: #fdfaf3;
+            --books-theme-accent: #D2B48C;
         }
         
         /* === General Styles === */
@@ -42,10 +40,8 @@
             background-color: var(--seats-theme-bg); 
             transition: background-color 0.8s ease; 
         }
-
         body.bg-seats-tab { background-color: var(--seats-theme-bg); }
         body.bg-books-tab { background-color: var(--books-theme-bg); }
-
         .dashboard-container { display: flex; flex-direction: column; min-height: 100vh; }
         
         /* === Header === */
@@ -76,28 +72,21 @@
         .overview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .overview-header h2 { margin: 0; font-size: 1.8em; font-weight: 600; }
         
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 30px; }
         .stat-card-admin-style {
             background-color: var(--card-bg-color); padding: 20px; border-radius: 12px;
             display: flex; flex-direction: column; gap: 10px;
             transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.8s ease;
             border: 2px solid var(--border-color);
-            opacity: 0;
-            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0; animation: fadeInUp 0.5s ease-out forwards;
         }
         .stat-card-admin-style:nth-child(1) { animation-delay: 0.1s; }
         .stat-card-admin-style:nth-child(2) { animation-delay: 0.2s; }
         .stat-card-admin-style:nth-child(3) { animation-delay: 0.3s; }
         .stat-card-admin-style:nth-child(4) { animation-delay: 0.4s; }
-
-        body.bg-seats-tab .stat-card-admin-style { border-color: var(--seats-theme-accent);background-color:var(--seats-theme-bg);}
-        body.bg-books-tab .stat-card-admin-style { border-color: var(--books-theme-accent); background-color:var(--books-theme-bg) ; }
-
+        body.bg-seats-tab .stat-card-admin-style { border-color: var(--seats-theme-accent); background-color: var(--seats-theme-bg); }
+        body.bg-books-tab .stat-card-admin-style { border-color: var(--books-theme-accent); background-color: var(--books-theme-bg); }
         .stat-card-admin-style:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.07); }
         .stat-card-admin-style .stat-icon-bg { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; flex-shrink: 0; }
         .stat-card-admin-style .stat-icon-bg.icon-seats { background-color: var(--success-bg); color: var(--success-color); }
@@ -108,66 +97,54 @@
         .stat-card-admin-style .stat-value-admin { font-size: 2em; font-weight: 600; color: var(--text-dark); line-height: 1.2; }
         .stat-card-admin-style .stat-subtext-admin { font-size: 0.8em; color: var(--text-light); }
         
-        /* === Tabs === */
         .content-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); }
         .tab-link { padding: 12px 20px; cursor: pointer; border: none; background-color: transparent; font-size: 1em; color: var(--text-secondary); font-weight: 500; border-bottom: 3px solid transparent; margin-bottom: -1px; transition: all 0.2s ease-in-out; }
         .tab-link i { margin-right: 8px; }
         .tab-link.active { color: var(--seats-theme-accent); font-weight: 600; border-bottom-color: var(--seats-theme-accent); }
         .tab-link:not(.active):hover { color: var(--text-dark); }
         
-        /* === Tab Content Styling === */
-        .tab-content {
-            display: none;
-            background-color: transparent; /* Active tab shows body background */
-            padding: 25px;
-            border-radius: 12px;
-            transition: background-color 0.8s ease;
-        }
-        .tab-content.active {
-            display: block;
-            animation: fadeInTab 0.5s ease;
-        }
-        @keyframes fadeInTab { from { opacity: 0; transform: translateY(10px); } to { opacity: 1;  transform: translateY(0px); } }
-
-        /* === NEW: The "Opposite Color" Logic === */
-        /* When seats tab is active, give books tab the book background */
-        body.bg-seats-tab #books-resources-content {
-            background-color: var(--books-theme-bg);
-        }
-        /* When books tab is active, give seats tab the seat background */
-        body.bg-books-tab #seat-reservation-content {
-            background-color: var(--seats-theme-bg);
-        }
+        .tab-content { display: none; background-color: transparent; padding: 25px; border-radius: 12px; transition: background-color 0.8s ease; }
+        .tab-content.active { display: block; animation: fadeInTab 0.5s ease; }
+        @keyframes fadeInTab { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0px); } }
+        body.bg-seats-tab #books-resources-content { background-color: var(--books-theme-bg); }
+        body.bg-books-tab #seat-reservation-content { background-color: var(--seats-theme-bg); }
         
-        /* === Seat Reservation Section === */
         .section-header-student { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .section-header-student h3 { margin: 0; font-size: 1.6em; font-weight: 600; }
-        .seat-filters { display: flex; gap: 10px; flex-wrap: wrap;}
+        
+        /* === Book Search Bar Styles === */
+        .book-search-container { position: relative; display: flex; align-items: center; flex-grow: 1; max-width: 400px; }
+        .book-search-container .search-icon { position: absolute; left: 15px; color: var(--text-secondary); pointer-events: none; }
+        #book-search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px; /* Left padding for icon */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-family: var(--font-family);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        #book-search-input:focus {
+            outline: none;
+            border-color: var(--books-theme-accent);
+            box-shadow: 0 0 0 3px rgba(210, 180, 140, 0.25);
+        }
+
+        /* Seat Reservation Section */
+        .seat-filters { display: flex; gap: 10px; flex-wrap: wrap; }
         .seat-filters .btn-filter { padding: 6px 12px; font-size: 0.85em; border-radius: 6px; cursor: pointer; background-color: var(--card-bg-color); color: var(--text-secondary); border: 1px solid var(--border-color); font-weight: 500; transition: all 0.2s; }
         .seat-filters .btn-filter.active, .seat-filters .btn-filter:hover { background-color: var(--seats-theme-accent); color: var(--white-color); border-color: var(--seats-theme-accent); }
-        
-        .seat-category { margin-bottom: 30px; /* Animation removed */ }
+        .seat-category { margin-bottom: 30px; }
         .seat-category h3 { font-size: 1.3em; margin-bottom: 15px; color: var(--text-dark); font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); }
         .seat-grid { display: grid; gap: 15px; }
         .gd-rooms { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .study-carrels, .e-resource, .reading-room { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-        
-        /* MODIFIED: Removed animation properties */
-        .seat-card, .gd-seat { 
-            padding: 15px; 
-            border-radius: 12px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: all 0.2s ease; 
-            border: 1px solid; 
-            font-weight: 500; 
-        }
+        .seat-card, .gd-seat { padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s ease; border: 1px solid; font-weight: 500; }
         .seat-card:hover, .gd-seat:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
         .seat-card i, .gd-seat i { display: block; font-size: 1.8em; margin-bottom: 8px; }
         .seat-card.gd-room { padding: 15px; display: flex; flex-direction: column; background-color: var(--card-bg-color); border: 1px solid var(--border-color); }
         .gd-room .room-title { font-weight: 600; margin-bottom: 10px; font-size: 1em; padding-bottom: 8px; color: var(--text-dark); }
         .gd-sub-seats { display: flex; justify-content: space-around; margin-top: 10px; gap: 8px; }
-        
         .seat-card.available, .gd-seat.available { background-color: var(--success-bg); border-color: var(--success-color); color: var(--success-color); }
         .seat-card.occupied, .gd-seat.occupied { background-color: var(--danger-bg); border-color: var(--danger-color); color: var(--danger-color); }
         .seat-card.pending-reservation, .gd-seat.pending-reservation { background-color: var(--warning-bg); border-color: var(--warning-color); color: var(--warning-text-color); }
@@ -176,9 +153,8 @@
         .seat-card .reservation-timer { display: block; font-size: 0.8em; margin-top: 5px; font-weight: 500; }
         .seat-card .reservation-timer i { font-size: 1em; margin-bottom: 0; margin-right: 4px; display: inline; }
         .seat-card.selected, .gd-seat.selected { box-shadow: 0 0 0 3px var(--seats-theme-accent) !important; transform: scale(1.03); }
-        
-        .seat-legend { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.9em; margin-top: 20px; padding: 15px; border-top: 1px solid var(--border-color); background-color: var(--card-bg-color); border-radius: 8px; }
-        /* The rest of the CSS is unchanged and correct */
+        .seat-actions-bar { margin-bottom: 15px; padding: 15px; background-color: var(--card-bg-color); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-color); }
+        .seat-legend { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.9em; margin-bottom: 25px; padding: 15px; background-color: var(--card-bg-color); border-radius: 8px; border: 1px solid var(--border-color); }
         .seat-legend span { display: flex; align-items: center; }
         .legend-color { width: 15px; height: 15px; border-radius: 3px; margin-right: 8px; }
         .legend-color.available { background-color: var(--success-bg); border: 1px solid var(--success-color); }
@@ -186,9 +162,10 @@
         .legend-color.pending-reservation { background-color: var(--warning-bg); border: 1px solid var(--warning-color); }
         .legend-color.in-use-by-me { background-color: rgba(0, 128, 128, 0.1); border: 1px solid var(--seats-theme-accent); }
         .legend-color.maintenance { background-color: #e2e8f0; border: 1px solid #cbd5e0; }
-        .seat-actions-bar { margin: 20px 0; padding: 15px; background-color: var(--card-bg-color); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border-color); }
         .selected-seat-info-student { font-weight: 500; }
         .seat-action-buttons-student button { margin-left: 10px; }
+        
+        /* Table and Other UI Styles */
         .table-container { background-color: var(--card-bg-color); padding: 20px; border-radius: 12px; overflow-x: auto; margin-bottom: 30px; border: 1px solid var(--border-color); }
         #books-table { width: 100%; border-collapse: collapse; }
         #books-table th, #books-table td { padding: 14px 15px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.9em; color: var(--text-secondary); vertical-align: middle; }
@@ -228,14 +205,15 @@
         #notification-popup.warning { background-color: var(--warning-color); color: var(--warning-text-color); }
         #notification-message { flex-grow: 1; font-size: 0.9em; }
         #notification-close-btn { background: none; border: none; color: inherit; font-size: 1.5em; cursor: pointer; line-height: 1; padding: 0 5px; opacity: 0.7; }
+        
+        /* Responsive Styles */
         @media (max-width: 1200px) { .stats-container { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
         @media (max-width: 992px) { .top-header { padding: 15px 20px; } .main-content { padding: 20px; } .bottom-section { grid-template-columns: 1fr; } .overview-header { flex-direction: column; align-items: flex-start; gap: 15px; } .stats-container { grid-template-columns: 1fr 1fr; } .gd-rooms { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) { .top-header { flex-direction: column; align-items: flex-start; gap: 15px; } .user-actions { width: 100%; justify-content: space-between; } .content-tabs { flex-wrap: wrap; } .tab-link { flex-basis: 50%; text-align: center; } .stats-container { grid-template-columns: 1fr; } .section-header-student { flex-direction: column; align-items: stretch; } .seat-filters { flex-direction: column; gap: 5px; } .seat-filters .btn-filter { width: 100%; text-align: center; } .study-carrels, .e-resource, .reading-room { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); } .gd-sub-seats { flex-wrap: wrap; justify-content: flex-start; gap: 10px; } .gd-seat { flex-grow: 1; flex-basis: 80px; } .seat-actions-bar { flex-direction: column; align-items: stretch; gap: 10px; } }
+        @media (max-width: 768px) { .top-header { flex-direction: column; align-items: flex-start; gap: 15px; } .user-actions { width: 100%; justify-content: space-between; } .content-tabs { flex-wrap: wrap; } .tab-link { flex-basis: 50%; text-align: center; } .stats-container { grid-template-columns: 1fr; } .section-header-student { flex-direction: column; align-items: stretch; } .seat-filters { flex-direction: column; gap: 5px; } .seat-filters .btn-filter { width: 100%; text-align: center; } .study-carrels, .e-resource, .reading-room { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); } .gd-sub-seats { flex-wrap: wrap; justify-content: flex-start; gap: 10px; } .gd-seat { flex-grow: 1; flex-basis: 80px; } .seat-actions-bar { flex-direction: column; align-items: stretch; gap: 10px; } .book-search-container { max-width: 100%; } }
         @media (max-width: 480px) { body { font-size: 14px; } .top-header, .main-content, .bottom-section { padding: 15px; } .user-info-header .user-details .user-name { display: none; } .seat-grid, .study-carrels, .e-resource, .reading-room { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); } .seat-card i, .gd-seat i { font-size: 1.5em; } .seat-card, .gd-seat { padding: 10px 5px; font-size: 0.8em; } .stat-card-admin-style .stat-value-admin { font-size: 1.8em; } .gd-room .room-title { font-size: 0.95em; } .gd-seat { flex-basis: 70px; } #notification-popup { right: 10px; bottom: 10px; max-width: calc(100% - 20px); font-size: 0.9em; } #notification-message { font-size: 0.85em; } }
     </style>
 </head>
 <body>
-    <!-- The HTML Body remains the same -->
     <div class="dashboard-container">
         <header class="top-header">
             <div class="logo-area">
@@ -283,7 +261,7 @@
                         <button class="btn-filter" data-filter="reading-room">Reading Room</button>
                     </div>
                 </div>
-                <div id="student-seat-map-area"><p>Loading seat map...</p></div>
+
                 <div class="seat-actions-bar">
                     <div class="selected-seat-info-student">Selected: <span id="student-selected-seat-id">---</span> (<span id="student-selected-seat-status">---</span>)</div>
                     <div class="seat-action-buttons-student">
@@ -298,11 +276,32 @@
                     <span><span class="legend-color in-use-by-me"></span> In Use (You)</span>
                     <span><span class="legend-color maintenance"></span> Maintenance</span>
                 </div>
+                
+                <div id="student-seat-map-area"><p>Loading seat map...</p></div>
             </section>
 
             <section id="books-resources-content" class="tab-content">
-                <div class="section-header-student"><h3>Available Books</h3></div>
-                <div class="table-container"><table id="books-table"><thead><tr><th>Title</th><th>Author</th><th>Rack</th><th>Status</th><th>Action</th></tr></thead><tbody id="books-table-body"></tbody></table></div>
+                <div class="section-header-student">
+                    <h3>Available Books</h3>
+                    <div class="book-search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="book-search-input" placeholder="Search by title or author...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="books-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Rack</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="books-table-body"></tbody>
+                    </table>
+                </div>
             </section>
         </main>
 
@@ -323,21 +322,19 @@
     
     <script src="https://unpkg.com/html5-qrcode/dist/html5-qrcode.min.js"></script>
     <script>
-    // The JavaScript requires NO changes.
-    // It is identical to the previous version and will work correctly with the updated CSS.
     document.addEventListener('DOMContentLoaded', async function() {
         function animateCountUp(el, finalValue, duration = 1500) { if (!el) return; let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); el.textContent = Math.floor(progress * finalValue); if (progress < 1) { window.requestAnimationFrame(step); } }; window.requestAnimationFrame(step); }
         function applyStaggeredAnimation(elements, delayIncrement = 0.05) { elements.forEach((el, index) => { el.style.animationDelay = `${index * delayIncrement}s`; }); }
 
-        const API_BASE_URL = 'https://smartlibrary-h80l.onrender.com/api';
+        const API_BASE_URL = 'http://localhost:5001/api';
         const authTokenForAPI = localStorage.getItem('token');
         const studentUserString = localStorage.getItem('user');
         let studentUser;
 
-        if (!authTokenForAPI || !studentUserString) { alert('Authentication required. Please login.'); window.location.href = 'index.html'; return; }
+        if (!authTokenForAPI || !studentUserString) { alert('Authentication required. Please login.'); window.location.href = 'login.html'; return; }
         try { studentUser = JSON.parse(studentUserString); }
-        catch (e) { alert('Invalid user data. Please login again.'); window.location.href = 'index.html'; return; }
-        if (!studentUser || studentUser.role !== 'student') { alert('Access Denied. This page is for students only.'); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'index.html'; return; }
+        catch (e) { alert('Invalid user data. Please login again.'); window.location.href = 'login.html'; return; }
+        if (!studentUser || studentUser.role !== 'student') { alert('Access Denied. This page is for students only.'); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'login.html'; return; }
 
         const CURRENT_USER_BACKEND_ID = studentUser._id;
         const CURRENT_USER_USERNAME = studentUser.username;
@@ -354,6 +351,7 @@
         const studentReserveBtn = document.getElementById('student-reserve-seat-btn');
         const studentCancelBtn = document.getElementById('student-cancel-reservation-btn');
         const booksTableBody = document.getElementById('books-table-body');
+        const bookSearchInput = document.getElementById('book-search-input');
         const activityLogUl = document.getElementById('activity-log');
         const availableSeatsStat = document.getElementById('available-seats-stat');
         const totalSeatsStat = document.getElementById('total-seats-stat');
@@ -367,7 +365,7 @@
         let studentSelectedSeatData = null;
         let seatReservationTimers = {};
         let allSeatsDataGlobal = [];
-        let html5QrCodeScanner = null;
+        let allBooksDataGlobal = [];
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -382,8 +380,13 @@
                     document.body.classList.add('bg-books-tab');
                 }
 
-                if (targetTabId === 'seat-reservation') fetchAndRenderSeats(document.querySelector('#student-seat-filters .btn-filter.active')?.dataset.filter || 'all');
-                else if (targetTabId === 'books-resources') renderBooksTable();
+                if (targetTabId === 'seat-reservation') {
+                    fetchAndRenderSeats(document.querySelector('#student-seat-filters .btn-filter.active')?.dataset.filter || 'all');
+                } else if (targetTabId === 'books-resources') {
+                    if (allBooksDataGlobal.length === 0) {
+                        fetchAndRenderBooks();
+                    }
+                }
             });
         });
         
@@ -392,71 +395,89 @@
         function hideNotification() { if (!notificationPopup) return; notificationPopup.classList.remove('show'); setTimeout(() => { if (!notificationPopup.classList.contains('show')) notificationPopup.style.display = 'none'; }, 300); }
         if (notificationCloseBtn) notificationCloseBtn.addEventListener('click', hideNotification);
         async function fetchDataStudent(url, errorMessage = "Failed to fetch data", options = {}) { try { const currentAuthToken = localStorage.getItem('token'); if (!currentAuthToken) { logoutUser("Session token missing."); return null; } const fetchOptions = { ...options, headers: { ...options.headers, 'Authorization': `Bearer ${currentAuthToken}`}}; if (fetchOptions.body && typeof fetchOptions.body === 'object' && !(fetchOptions.body instanceof FormData)) { if(!fetchOptions.headers['Content-Type']) fetchOptions.headers['Content-Type'] = 'application/json'; if(fetchOptions.headers['Content-Type'] === 'application/json') fetchOptions.body = JSON.stringify(fetchOptions.body); } const response = await fetch(url, fetchOptions); if (!response.ok) { if (response.status === 401) { logoutUser("Session expired or unauthorized."); return null; } const errorData = await response.json().catch(() => ({ message: response.statusText })); throw new Error(`${errorMessage}: ${errorData.message || response.statusText}`); } if (response.status === 204) return { message: "Success (No Content)"}; return await response.json(); } catch (error) { console.error("FetchDataStudent Error:", error.message, "URL:", url); showNotification(error.message, 'error'); return null; } }
+        
         async function fetchAndRenderSeats(filter = 'all') { studentSeatMapArea.innerHTML = '<p>Loading seats...</p>'; const seatsDataFromBackend = await fetchDataStudent(`${API_BASE_URL}/seats`, "Failed to load seat map"); if (seatsDataFromBackend) { allSeatsDataGlobal = seatsDataFromBackend; renderSeatMap(seatsDataFromBackend, filter); updateDashboardSeatStats(seatsDataFromBackend); } else { studentSeatMapArea.innerHTML = '<p>Could not load seat data. Please try again.</p>'; updateDashboardSeatStats([]); } }
-        function renderSeatMap(seatsData, filter = 'all') {  studentSeatMapArea.innerHTML = ''; const seatCategories = {}; seatsData.forEach(seat => { if (!seatCategories[seat.category]) seatCategories[seat.category] = []; seatCategories[seat.category].push(seat); }); Object.keys(seatCategories).sort().forEach(categoryKey => { if (filter !== 'all' && filter !== categoryKey) return; const categoryData = seatCategories[categoryKey]; if (!categoryData || categoryData.length === 0) return; const categoryDiv = document.createElement('div'); categoryDiv.classList.add('seat-category'); categoryDiv.dataset.category = categoryKey; const categoryTitle = document.createElement('h3'); let titleText = categoryKey.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); if (titleText === "Gd Rooms") titleText = "Group Discussion Rooms"; else if (titleText === "EResource") titleText = "E-Resource Center"; categoryTitle.textContent = titleText; categoryDiv.appendChild(categoryTitle); const gridDiv = document.createElement('div'); gridDiv.classList.add('seat-grid', categoryKey); if (categoryKey === "gd-rooms") { const rooms = {}; categoryData.forEach(seat => { if(!seat.roomId) return; if (!rooms[seat.roomId]) rooms[seat.roomId] = { title: `GD Room ${seat.roomId.replace('GD','')}`, subSeats: [] }; rooms[seat.roomId].subSeats.push(seat); }); Object.entries(rooms).sort().forEach(([roomId, roomData]) => { const roomCard = document.createElement('div'); roomCard.classList.add('seat-card', 'gd-room'); roomCard.dataset.roomId = roomId; const roomTitleDiv = document.createElement('div'); roomTitleDiv.classList.add('room-title'); roomTitleDiv.textContent = roomData.title; roomCard.appendChild(roomTitleDiv); const subSeatsDiv = document.createElement('div'); subSeatsDiv.classList.add('gd-sub-seats'); roomData.subSeats.sort((a, b) => a.name.localeCompare(b.name)).forEach(subSeat => subSeatsDiv.appendChild(createSeatElement(subSeat, true))); roomCard.appendChild(subSeatsDiv); gridDiv.appendChild(roomCard); }); } else { categoryData.sort((a, b) => a.name.localeCompare(b.name)).forEach(seatItem => gridDiv.appendChild(createSeatElement(seatItem, false))); } categoryDiv.appendChild(gridDiv); studentSeatMapArea.appendChild(categoryDiv); }); if (studentSeatMapArea.innerHTML === '') studentSeatMapArea.innerHTML = '<p>No seats match filter.</p>'; else { /* applyStaggeredAnimation is harmless now as CSS animation is removed */ } resetStudentSeatSelection(); allSeatsDataGlobal.forEach(seat => {  if (seat.status === 'pending-reservation' && seat.reservedBy?._id === CURRENT_USER_BACKEND_ID && seat.reservationEndTime) { const seatEl = studentSeatMapArea.querySelector(`.seat-card[data-seat-id="${seat.seatId}"], .gd-seat[data-seat-id="${seat.seatId}"]`); if (seatEl) ensureReservationTimerExists(seatEl, seat, seat.reservationEndTime); } }); }
-        function createSeatElement(seatData, isGdSubSeat) {  const seatElement = document.createElement('div'); let visualStatus = seatData.status; if (seatData.status === 'pending-reservation' && seatData.reservedBy?._id === CURRENT_USER_BACKEND_ID) visualStatus = 'pending-reservation'; else if (seatData.status === 'in-use' && seatData.occupiedBy?._id === CURRENT_USER_BACKEND_ID) visualStatus = 'in-use-by-me'; else if (['pending-reservation', 'reserved', 'in-use', 'occupied'].includes(seatData.status)) visualStatus = 'occupied'; else if (seatData.status === 'maintenance') visualStatus = 'maintenance'; else visualStatus = 'available'; seatElement.classList.add(isGdSubSeat ? 'gd-seat' : 'seat-card', visualStatus); seatElement.dataset.seatId = seatData.seatId; seatElement.dataset.backendId = seatData._id; const iconElement = document.createElement('i'); iconElement.className = `fas ${seatData.icon || 'fa-chair'}`; seatElement.appendChild(iconElement); let seatDisplayName = seatData.name; if (isGdSubSeat && seatData.name.includes(" - ")) seatDisplayName = seatData.name.split(" - ")[1] || seatData.name; seatElement.appendChild(document.createTextNode(" " + seatDisplayName)); if (visualStatus === 'pending-reservation' && seatData.reservationEndTime && new Date(seatData.reservationEndTime) > new Date()) { ensureReservationTimerExists(seatElement, seatData, seatData.reservationEndTime); } seatElement.addEventListener('click', () => handleStudentSeatSelection(seatElement, seatData)); return seatElement; }
+        function renderSeatMap(seatsData, filter = 'all') {  studentSeatMapArea.innerHTML = ''; const seatCategories = {}; seatsData.forEach(seat => { if (!seatCategories[seat.category]) seatCategories[seat.category] = []; seatCategories[seat.category].push(seat); }); Object.keys(seatCategories).sort().forEach(categoryKey => { if (filter !== 'all' && filter !== categoryKey) return; const categoryData = seatCategories[categoryKey]; if (!categoryData || categoryData.length === 0) return; const categoryDiv = document.createElement('div'); categoryDiv.classList.add('seat-category'); categoryDiv.dataset.category = categoryKey; const categoryTitle = document.createElement('h3'); let titleText = categoryKey.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); if (titleText === "Gd Rooms") titleText = "Group Discussion Rooms"; else if (titleText === "EResource") titleText = "E-Resource Center"; categoryTitle.textContent = titleText; categoryDiv.appendChild(categoryTitle); const gridDiv = document.createElement('div'); gridDiv.classList.add('seat-grid', categoryKey); if (categoryKey === "gd-rooms") { const rooms = {}; categoryData.forEach(seat => { if(!seat.roomId) return; if (!rooms[seat.roomId]) rooms[seat.roomId] = { title: `GD Room ${seat.roomId.replace('GD','')}`, subSeats: [] }; rooms[seat.roomId].subSeats.push(seat); }); Object.entries(rooms).sort().forEach(([roomId, roomData]) => { const roomCard = document.createElement('div'); roomCard.classList.add('seat-card', 'gd-room'); roomCard.dataset.roomId = roomId; const roomTitleDiv = document.createElement('div'); roomTitleDiv.classList.add('room-title'); roomTitleDiv.textContent = roomData.title; roomCard.appendChild(roomTitleDiv); const subSeatsDiv = document.createElement('div'); subSeatsDiv.classList.add('gd-sub-seats'); roomData.subSeats.sort((a, b) => a.name.localeCompare(b.name)).forEach(subSeat => subSeatsDiv.appendChild(createSeatElement(subSeat, true))); roomCard.appendChild(subSeatsDiv); gridDiv.appendChild(roomCard); }); } else { categoryData.sort((a, b) => a.name.localeCompare(b.name)).forEach(seatItem => gridDiv.appendChild(createSeatElement(seatItem, false))); } categoryDiv.appendChild(gridDiv); studentSeatMapArea.appendChild(categoryDiv); }); if (studentSeatMapArea.innerHTML === '') studentSeatMapArea.innerHTML = '<p>No seats match filter.</p>'; resetStudentSeatSelection(); allSeatsDataGlobal.forEach(seat => {  if (seat.status === 'pending-reservation' && seat.reservedBy?._id === CURRENT_USER_BACKEND_ID && seat.reservationEndTime) { const seatEl = studentSeatMapArea.querySelector(`.seat-card[data-seat-id="${seat.seatId}"], .gd-seat[data-seat-id="${seat.seatId}"]`); if (seatEl) ensureReservationTimerExists(seatEl, seat, seat.reservationEndTime); } }); }
+        function createSeatElement(seatData, isGdSubSeat) { const seatElement = document.createElement('div'); let visualStatus = seatData.status; if (seatData.status === 'pending-reservation' && seatData.reservedBy?._id === CURRENT_USER_BACKEND_ID) visualStatus = 'pending-reservation'; else if (seatData.status === 'in-use' && seatData.occupiedBy?._id === CURRENT_USER_BACKEND_ID) visualStatus = 'in-use-by-me'; else if (['pending-reservation', 'reserved', 'in-use', 'occupied'].includes(seatData.status)) visualStatus = 'occupied'; else if (seatData.status === 'maintenance') visualStatus = 'maintenance'; else visualStatus = 'available'; seatElement.classList.add(isGdSubSeat ? 'gd-seat' : 'seat-card', visualStatus); seatElement.dataset.seatId = seatData.seatId; seatElement.dataset.backendId = seatData._id; const iconElement = document.createElement('i'); iconElement.className = `fas ${seatData.icon || 'fa-chair'}`; seatElement.appendChild(iconElement); let seatDisplayName = seatData.name; if (isGdSubSeat && seatData.name.includes(" - ")) seatDisplayName = seatData.name.split(" - ")[1] || seatData.name; seatElement.appendChild(document.createTextNode(" " + seatDisplayName)); if (visualStatus === 'pending-reservation' && seatData.reservationEndTime && new Date(seatData.reservationEndTime) > new Date()) { ensureReservationTimerExists(seatElement, seatData, seatData.reservationEndTime); } seatElement.addEventListener('click', () => handleStudentSeatSelection(seatElement, seatData)); return seatElement; }
         function handleStudentSeatSelection(seatElement, seatDataFull) { if (studentSelectedSeatElement) studentSelectedSeatElement.classList.remove('selected'); studentSelectedSeatData = seatDataFull; const trueStatus = seatDataFull.status; const isMyReservation = trueStatus === 'pending-reservation' && seatDataFull.reservedBy?._id === CURRENT_USER_BACKEND_ID; const isMyOccupied = trueStatus === 'in-use' && seatDataFull.occupiedBy?._id === CURRENT_USER_BACKEND_ID; const reservedByOther = (trueStatus === 'pending-reservation' || trueStatus === 'reserved') && seatDataFull.reservedBy?._id !== CURRENT_USER_BACKEND_ID; const occupiedByOther = (trueStatus === 'in-use' || trueStatus === 'occupied') && seatDataFull.occupiedBy?._id !== CURRENT_USER_BACKEND_ID; if (trueStatus === 'maintenance' || occupiedByOther || reservedByOther) { let msg = `Seat ${seatDataFull.name} is currently ${trueStatus.replace('-',' ')}.`; if (trueStatus==='maintenance') msg = `Seat ${seatDataFull.name} is under maintenance.`; else if (occupiedByOther||reservedByOther) msg = `Seat ${seatDataFull.name} is occupied or reserved.`; showNotification(msg, 'error'); resetStudentSeatSelection(); return; } seatElement.classList.add('selected'); studentSelectedSeatElement = seatElement; studentSelectedSeatIdSpan.textContent = seatDataFull.name; let displayStatusText = trueStatus.charAt(0).toUpperCase() + trueStatus.slice(1).replace('-',' '); if (isMyReservation) displayStatusText = "Your Reservation"; else if (isMyOccupied) displayStatusText = "In Use (By You)"; else if (trueStatus === 'available') displayStatusText = "Available"; studentSelectedSeatStatusSpan.textContent = displayStatusText; updateStudentSeatActionButtons(seatDataFull); showNotification(`Selected: ${seatDataFull.name} (${displayStatusText}).`, 'info', 2500); }
         function resetStudentSeatSelection() { if (studentSelectedSeatElement) studentSelectedSeatElement.classList.remove('selected'); studentSelectedSeatElement = null; studentSelectedSeatData = null; studentSelectedSeatIdSpan.textContent = '---'; studentSelectedSeatStatusSpan.textContent = '---'; updateStudentSeatActionButtons(null); }
-        function updateStudentSeatActionButtons(seatData) {  studentReserveBtn.disabled = true; studentCancelBtn.disabled = true; if (!seatData) return; const isMyActiveReservation = seatData.status === 'pending-reservation' && seatData.reservedBy?._id === CURRENT_USER_BACKEND_ID && new Date(seatData.reservationEndTime) > new Date(); if (seatData.status === 'available' && !hasActiveSeatInteraction(CURRENT_USER_BACKEND_ID, allSeatsDataGlobal)) studentReserveBtn.disabled = false; else if (isMyActiveReservation) studentCancelBtn.disabled = false; }
+        function updateStudentSeatActionButtons(seatData) { studentReserveBtn.disabled = true; studentCancelBtn.disabled = true; if (!seatData) return; const isMyActiveReservation = seatData.status === 'pending-reservation' && seatData.reservedBy?._id === CURRENT_USER_BACKEND_ID && new Date(seatData.reservationEndTime) > new Date(); if (seatData.status === 'available' && !hasActiveSeatInteraction(CURRENT_USER_BACKEND_ID, allSeatsDataGlobal)) studentReserveBtn.disabled = false; else if (isMyActiveReservation) studentCancelBtn.disabled = false; }
         studentSeatFilters.forEach(button => { button.addEventListener('click', function() { studentSeatFilters.forEach(btn => btn.classList.remove('active')); this.classList.add('active'); fetchAndRenderSeats(this.getAttribute('data-filter')); }); });
-        studentReserveBtn.addEventListener('click', async () => {  if (!studentSelectedSeatData) { showNotification("Please select a seat first.", "error"); return; } studentReserveBtn.disabled = true; studentReserveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reserving...'; const result = await fetchDataStudent(`${API_BASE_URL}/seats/${studentSelectedSeatData.seatId}/reserve`, "Reservation failed", { method: 'POST' }); if (result) { showNotification(`Seat ${result.name || studentSelectedSeatData.name} reserved!`, 'success'); await loadStudentActivities(); await fetchAndRenderSeats(document.querySelector('#student-seat-filters .btn-filter.active')?.dataset.filter || 'all'); } studentReserveBtn.innerHTML = '<i class="fas fa-hourglass-start"></i> Reserve (10min)'; });
+        studentReserveBtn.addEventListener('click', async () => { if (!studentSelectedSeatData) { showNotification("Please select a seat first.", "error"); return; } studentReserveBtn.disabled = true; studentReserveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reserving...'; const result = await fetchDataStudent(`${API_BASE_URL}/seats/${studentSelectedSeatData.seatId}/reserve`, "Reservation failed", { method: 'POST' }); if (result) { showNotification(`Seat ${result.name || studentSelectedSeatData.name} reserved!`, 'success'); await loadStudentActivities(); await fetchAndRenderSeats(document.querySelector('#student-seat-filters .btn-filter.active')?.dataset.filter || 'all'); } studentReserveBtn.innerHTML = '<i class="fas fa-hourglass-start"></i> Reserve (10min)'; });
         studentCancelBtn.addEventListener('click', async () => { if (!studentSelectedSeatData) { showNotification("Select your reserved seat to cancel.", "error"); return; } studentCancelBtn.disabled = true; studentCancelBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...'; const result = await fetchDataStudent(`${API_BASE_URL}/seats/${studentSelectedSeatData.seatId}/cancel-reservation`, "Cancellation failed", { method: 'POST' }); if (result) { showNotification(`Reservation for ${result.name || studentSelectedSeatData.name} cancelled.`, 'info'); await loadStudentActivities(); await fetchAndRenderSeats(document.querySelector('#student-seat-filters .btn-filter.active')?.dataset.filter || 'all'); } studentCancelBtn.innerHTML = '<i class="fas fa-times-circle"></i> Cancel Reservation'; });
         function startReservationTimer(seatElement, seatData, endTimeString) { const endTime = new Date(endTimeString).getTime(); if (isNaN(endTime) || !seatElement) return; let timerDisplay = seatElement.querySelector('.reservation-timer'); if (!timerDisplay) { timerDisplay = document.createElement('span'); timerDisplay.classList.add('reservation-timer'); seatElement.appendChild(timerDisplay); } const timerKey = seatData.seatId; if (seatReservationTimers[timerKey]) clearInterval(seatReservationTimers[timerKey]); function updateTimer() { const timeLeftMs = endTime - Date.now(); if (timeLeftMs <= 0) { timerDisplay.innerHTML = `<i class="fas fa-times-circle"></i> Expired`; clearInterval(seatReservationTimers[timerKey]); delete seatReservationTimers[timerKey]; if(seatElement.classList.contains('pending-reservation')){ showNotification(`Reservation for ${seatData.name} expired.`, 'warning'); fetchAndRenderSeats(document.querySelector('#student-seat-filters .btn-filter.active')?.dataset.filter || 'all'); } return; } const mins = Math.floor((timeLeftMs/1000/60)%60); const secs = Math.floor((timeLeftMs/1000)%60); timerDisplay.innerHTML = `<i class="fas fa-hourglass-half"></i> ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`; } updateTimer(); seatReservationTimers[timerKey] = setInterval(updateTimer, 1000); }
         function ensureReservationTimerExists(seatElement, seatData, endTimeString) { if (!seatElement || !endTimeString || !(new Date(endTimeString) > new Date())) return; let reservationTimerEl = seatElement.querySelector('.reservation-timer'); if (!reservationTimerEl) { reservationTimerEl = document.createElement('span'); reservationTimerEl.classList.add('reservation-timer'); seatElement.appendChild(reservationTimerEl); } startReservationTimer(seatElement, seatData, endTimeString); }
         function hasActiveSeatInteraction(studentId, seatsToCheck) { return seatsToCheck.some(seat => (seat.status === 'pending-reservation' && seat.reservedBy?._id === studentId && new Date(seat.reservationEndTime) > new Date()) || (seat.status === 'in-use' && seat.occupiedBy?._id === studentId)); }
-        async function renderBooksTable() { booksTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading books...</td></tr>'; const booksFromAPI = await fetchDataStudent(`${API_BASE_URL}/books`, "Failed to load books"); if (booksFromAPI && Array.isArray(booksFromAPI)) { booksTableBody.innerHTML = ''; if (booksFromAPI.length === 0) { booksTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No books available.</td></tr>'; } else { booksFromAPI.forEach((book) => { const row = booksTableBody.insertRow(); row.insertCell().textContent = book.title; row.insertCell().textContent = book.author; row.insertCell().textContent = book.rack; const statusCell = row.insertCell(); const statusBadge = document.createElement('span'); statusBadge.className = `status-badge ${(book.status||'available').toLowerCase().replace(/\s+/g, '-')}`; statusBadge.textContent = (book.status||'Available').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' '); statusCell.appendChild(statusBadge); row.insertCell().innerHTML = `<button class="action-btn" disabled><i class="fas fa-info-circle"></i> Details</button>`; }); applyStaggeredAnimation(booksTableBody.querySelectorAll('tr')); } updateDashboardBookStats(booksFromAPI); } else { booksTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Could not load books.</td></tr>'; updateDashboardBookStats([]); } }
+
+        function displayBooksInTable(booksToDisplay) {
+            booksTableBody.innerHTML = '';
+            if (booksToDisplay.length === 0) {
+                booksTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No books match your search.</td></tr>';
+                return;
+            }
+            booksToDisplay.forEach((book) => {
+                const row = booksTableBody.insertRow();
+                row.insertCell().textContent = book.title;
+                row.insertCell().textContent = book.author;
+                row.insertCell().textContent = book.rack;
+                const statusCell = row.insertCell();
+                const statusBadge = document.createElement('span');
+                statusBadge.className = `status-badge ${(book.status||'available').toLowerCase().replace(/\s+/g, '-')}`;
+                statusBadge.textContent = (book.status||'Available').split('-').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
+                statusCell.appendChild(statusBadge);
+                row.insertCell().innerHTML = `<button class="action-btn" disabled><i class="fas fa-info-circle"></i> Details</button>`;
+            });
+            applyStaggeredAnimation(booksTableBody.querySelectorAll('tr'));
+        }
+        async function fetchAndRenderBooks() {
+            booksTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading books...</td></tr>';
+            const booksFromAPI = await fetchDataStudent(`${API_BASE_URL}/books`, "Failed to load books");
+            if (booksFromAPI && Array.isArray(booksFromAPI)) {
+                allBooksDataGlobal = booksFromAPI;
+                displayBooksInTable(allBooksDataGlobal);
+                updateDashboardBookStats(allBooksDataGlobal);
+            } else {
+                booksTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Could not load books.</td></tr>';
+                allBooksDataGlobal = [];
+                updateDashboardBookStats([]);
+            }
+        }
+        bookSearchInput.addEventListener('input', () => {
+            const searchTerm = bookSearchInput.value.toLowerCase().trim();
+            const filteredBooks = allBooksDataGlobal.filter(book => 
+                book.title.toLowerCase().includes(searchTerm) || 
+                book.author.toLowerCase().includes(searchTerm)
+            );
+            displayBooksInTable(filteredBooks);
+        });
+        
         async function loadStudentActivities() { const myActivities = await fetchDataStudent(`${API_BASE_URL}/activities/my?limit=5`, "Failed to load your activities"); activityLogUl.innerHTML = ''; if (myActivities && Array.isArray(myActivities) && myActivities.length > 0) { myActivities.forEach(activity => addActivityLogLocal(activity.details || `${activity.action.replace(/_/g, ' ')}: ${activity.resourceType || ''} ${activity.resourceId || ''}`, new Date(activity.timestamp))); } else { activityLogUl.innerHTML = '<li>No recent activity.</li>'; } }
         function addActivityLogLocal(message, date = new Date()) { const listItem = document.createElement('li'); listItem.innerHTML = `<span><i class="fas fa-history"></i> ${message}</span> <span class="timestamp">${date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>`; listItem.style.opacity = '0'; listItem.style.transform = 'translateY(-20px)'; activityLogUl.prepend(listItem); if (activityLogUl.children.length > 5) { activityLogUl.removeChild(activityLogUl.lastChild); } setTimeout(() => { listItem.style.opacity = '1'; listItem.style.transform = 'translateY(0)'; }, 10); }
-        function updateDashboardSeatStats(seats) {  allSeatsDataGlobal = seats; let availableCount = 0; let totalCount = seats.length; seats.forEach(seat => { if (seat.status === 'available') availableCount++; }); if (availableSeatsStat) animateCountUp(availableSeatsStat, availableCount); if (totalSeatsStat) animateCountUp(totalSeatsStat, totalCount); const currentlySelectedSeatFreshData = studentSelectedSeatData ? allSeatsDataGlobal.find(s => s.seatId === studentSelectedSeatData.seatId) : null; updateStudentSeatActionButtons(currentlySelectedSeatFreshData); }
-        function updateDashboardBookStats(booksArray) {  let availableCount = 0; let userCheckedOutCount = 0; if (Array.isArray(booksArray)) { availableCount = booksArray.filter(b => b.status === 'available').length; userCheckedOutCount = booksArray.filter(b => b.status === 'checked-out' && b.checkedOutBy?._id === CURRENT_USER_BACKEND_ID).length; } if (availableBooksStat) animateCountUp(availableBooksStat, availableCount); if (checkedOutBooksStat) animateCountUp(checkedOutBooksStat, userCheckedOutCount); }
-        function logoutUser(reason = "Logged out.") { showNotification(reason, 'info', 2000); localStorage.removeItem('token'); localStorage.removeItem('user'); setTimeout(() => { window.location.href = 'index.html'; }, 1000); }
+        function updateDashboardSeatStats(seats) { allSeatsDataGlobal = seats; let availableCount = 0; let totalCount = seats.length; seats.forEach(seat => { if (seat.status === 'available') availableCount++; }); if (availableSeatsStat) animateCountUp(availableSeatsStat, availableCount); if (totalSeatsStat) animateCountUp(totalSeatsStat, totalCount); const currentlySelectedSeatFreshData = studentSelectedSeatData ? allSeatsDataGlobal.find(s => s.seatId === studentSelectedSeatData.seatId) : null; updateStudentSeatActionButtons(currentlySelectedSeatFreshData); }
+        function updateDashboardBookStats(booksArray) { let availableCount = 0; let userCheckedOutCount = 0; if (Array.isArray(booksArray)) { availableCount = booksArray.filter(b => b.status === 'available').length; userCheckedOutCount = booksArray.filter(b => b.status === 'checked-out' && b.checkedOutBy?._id === CURRENT_USER_BACKEND_ID).length; } if (availableBooksStat) animateCountUp(availableBooksStat, availableCount); if (checkedOutBooksStat) animateCountUp(checkedOutBooksStat, userCheckedOutCount); }
+        function logoutUser(reason = "Logged out.") { showNotification(reason, 'info', 2000); localStorage.removeItem('token'); localStorage.removeItem('user'); setTimeout(() => { window.location.href = 'login.html'; }, 1000); }
         
         document.getElementById('quick-reserve-seat')?.addEventListener('click', () => { document.querySelector('.tab-link[data-tab="seat-reservation"]').click(); showNotification("Select an available seat from the map to reserve.", "info"); });
         document.getElementById('quick-find-book')?.addEventListener('click', () => document.querySelector('.tab-link[data-tab="books-resources"]').click());
         document.getElementById('logout-btn')?.addEventListener('click', ()=>logoutUser("You have been logged out."));
 
-        await loadStudentActivities();
-        const activeTab = document.querySelector('.tab-link.active') || document.querySelector('.tab-link[data-tab="seat-reservation"]');
-        if (activeTab) { activeTab.click(); }
+        async function initializeDashboard() {
+            await loadStudentActivities();
+            const activeTab = document.querySelector('.tab-link.active') || document.querySelector('.tab-link[data-tab="seat-reservation"]');
+            if (activeTab) {
+                activeTab.click();
+            }
+        }
+        initializeDashboard();
     });
 
-
-
-
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-  // Disable key combinations
-  document.addEventListener('keydown', function (e) {
-    // F12
-    if (e.key === 'F12' || e.keyCode === 123) {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+Shift+I/J/C
-    if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+U
-    if (e.ctrlKey && e.key.toUpperCase() === 'U') {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+S (to block save page)
-    if (e.ctrlKey && e.key.toUpperCase() === 'S') {
-      e.preventDefault();
-      return false;
-    }
-
-    // Ctrl+P (to block print)
-    if (e.ctrlKey && e.key.toUpperCase() === 'P') {
-      e.preventDefault();
-      return false;
-    }
-  });
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12' || e.keyCode === 123 || (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) || (e.ctrlKey && e.key.toUpperCase() === 'U') || (e.ctrlKey && e.key.toUpperCase() === 'S') || (e.ctrlKey && e.key.toUpperCase() === 'P')) {
+            e.preventDefault();
+            return false;
+        }
+    });
     </script>
 </body>
 </html>
