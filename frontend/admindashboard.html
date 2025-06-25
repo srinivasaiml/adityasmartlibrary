@@ -720,13 +720,13 @@ if (!authTokenForAPI || !adminUserString) {
     alert('Demonstration Mode: Using mock user "Srikanth". Login is not required.');
 } else {
     try { adminUser = JSON.parse(adminUserString); }
-    catch (e) { alert('Invalid user data. Please login again.'); window.location.href = 'login.html'; return; }
+    catch (e) { alert('Invalid user data. Please login again.'); window.location.href = 'index.html'; return; }
 }
 
 if (adminUser.role !== 'admin') {
     alert('Access Denied. This page is for Administrators only.');
     localStorage.clear();
-    window.location.href = 'login.html'; return;
+    window.location.href = 'index.html'; return;
 }
 
 document.getElementById('admin-username').textContent = adminUser.name || adminUser.username;
@@ -1206,7 +1206,7 @@ cancelBookActionBtn.addEventListener('click', () => bookModal.style.display = 'n
 confirmBookActionBtn.addEventListener('click', async () => { const bookId = bookModalIdInput.value; const title = bookTitleInput.value.trim(); const author = bookAuthorInput.value.trim(); const isbn = bookIsbnInput.value.trim(); const status = bookStatusSelect.value; const rack = bookRackInput.value.trim(); const quantity = parseInt(bookQuantityInput.value, 10); if (!title || !author || !rack) { alert('Please fill in Title, Author, and Rack.'); return; } const payload = { title, author, isbn, status, rack }; let url = `${API_BASE_URL}/books`; let method = 'POST'; if (bookId) { url = `${API_BASE_URL}/books/${bookId}`; method = 'PUT'; } else { if (isNaN(quantity) || quantity < 1) { alert('Valid quantity needed for new book(s).'); return; } payload.quantity = quantity; } confirmBookActionBtn.disabled = true; confirmBookActionBtn.textContent = 'Saving...'; const result = await fetchData(url, `Failed to ${bookId ? 'update' : 'add'} book`, { method, body: payload }); if (result) { bookModal.style.display = 'none'; await fetchAndRenderBooks(); if (document.getElementById('dashboard-content').classList.contains('active')) await loadDashboardData(); } confirmBookActionBtn.disabled = false; confirmBookActionBtn.textContent = 'Save Book'; });
 async function deleteBook(bookId, bookTitle) { if (!confirm(`Delete "${bookTitle}"? This action cannot be undone.`)) return; const result = await fetchData(`${API_BASE_URL}/books/${bookId}`, "Failed to delete book", { method: 'DELETE' }); if (result) { await fetchAndRenderBooks(); if (document.getElementById('dashboard-content').classList.contains('active')) await loadDashboardData(); } }
 async function fetchAllActivities() { const response = await fetchData(`${API_BASE_URL}/activities?limit=100`, "Failed to load all activities"); if (response && response.activities) { populateActivityTable(mainActivityLogTableBody, response.activities); document.getElementById('totalActivitiesStat').innerHTML = `${response.totalActivities || 0} <i class="fas fa-wave-square stat-icon blue"></i>`; const bookActs = response.activities.filter(a => a.resourceType === 'Book').length; const seatActs = response.activities.filter(a => a.resourceType === 'Seat').length; document.getElementById('bookActivitiesStat').innerHTML = `${bookActs} <i class="fas fa-book stat-icon green"></i>`; document.getElementById('seatActivitiesStat').innerHTML = `${seatActs} <i class="fas fa-chair stat-icon blue"></i>`; const usersToday = new Set(response.activities.filter(a => new Date(a.timestamp || a.createdAt).toDateString() === new Date().toDateString() && a.user).map(a => a.user?._id || a.user?.username)).size; document.getElementById('usersActiveTodayStat').innerHTML = `${usersToday} <i class="fas fa-users stat-icon orange"></i>`; } }
-function logoutAdmin(message = "You have been logged out.") { if(isScannerActive) stopBarcodeScanner(); alert(message); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'login.html'; }
+function logoutAdmin(message = "You have been logged out.") { if(isScannerActive) stopBarcodeScanner(); alert(message); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'index.html'; }
 document.getElementById('admin-logout-btn').addEventListener('click', () => logoutAdmin());
 
 // --- BARCODE SCANNER FUNCTIONS (CHECK-IN & CHECK-OUT) ---
