@@ -331,10 +331,10 @@
         const studentUserString = localStorage.getItem('user');
         let studentUser;
 
-        if (!authTokenForAPI || !studentUserString) { alert('Authentication required. Please login.'); window.location.href = 'login.html'; return; }
+        if (!authTokenForAPI || !studentUserString) { alert('Authentication required. Please login.'); window.location.href = 'index.html'; return; }
         try { studentUser = JSON.parse(studentUserString); }
-        catch (e) { alert('Invalid user data. Please login again.'); window.location.href = 'login.html'; return; }
-        if (!studentUser || studentUser.role !== 'student') { alert('Access Denied. This page is for students only.'); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'login.html'; return; }
+        catch (e) { alert('Invalid user data. Please login again.'); window.location.href = 'index.html'; return; }
+        if (!studentUser || studentUser.role !== 'student') { alert('Access Denied. This page is for students only.'); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'index.html'; return; }
 
         const CURRENT_USER_BACKEND_ID = studentUser._id;
         const CURRENT_USER_USERNAME = studentUser.username;
@@ -455,7 +455,7 @@
         function addActivityLogLocal(message, date = new Date()) { const listItem = document.createElement('li'); listItem.innerHTML = `<span><i class="fas fa-history"></i> ${message}</span> <span class="timestamp">${date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>`; listItem.style.opacity = '0'; listItem.style.transform = 'translateY(-20px)'; activityLogUl.prepend(listItem); if (activityLogUl.children.length > 5) { activityLogUl.removeChild(activityLogUl.lastChild); } setTimeout(() => { listItem.style.opacity = '1'; listItem.style.transform = 'translateY(0)'; }, 10); }
         function updateDashboardSeatStats(seats) { allSeatsDataGlobal = seats; let availableCount = 0; let totalCount = seats.length; seats.forEach(seat => { if (seat.status === 'available') availableCount++; }); if (availableSeatsStat) animateCountUp(availableSeatsStat, availableCount); if (totalSeatsStat) animateCountUp(totalSeatsStat, totalCount); const currentlySelectedSeatFreshData = studentSelectedSeatData ? allSeatsDataGlobal.find(s => s.seatId === studentSelectedSeatData.seatId) : null; updateStudentSeatActionButtons(currentlySelectedSeatFreshData); }
         function updateDashboardBookStats(booksArray) { let availableCount = 0; let userCheckedOutCount = 0; if (Array.isArray(booksArray)) { availableCount = booksArray.filter(b => b.status === 'available').length; userCheckedOutCount = booksArray.filter(b => b.status === 'checked-out' && b.checkedOutBy?._id === CURRENT_USER_BACKEND_ID).length; } if (availableBooksStat) animateCountUp(availableBooksStat, availableCount); if (checkedOutBooksStat) animateCountUp(checkedOutBooksStat, userCheckedOutCount); }
-        function logoutUser(reason = "Logged out.") { showNotification(reason, 'info', 2000); localStorage.removeItem('token'); localStorage.removeItem('user'); setTimeout(() => { window.location.href = 'login.html'; }, 1000); }
+        function logoutUser(reason = "Logged out.") { showNotification(reason, 'info', 2000); localStorage.removeItem('token'); localStorage.removeItem('user'); setTimeout(() => { window.location.href = 'index.html'; }, 1000); }
         
         document.getElementById('quick-reserve-seat')?.addEventListener('click', () => { document.querySelector('.tab-link[data-tab="seat-reservation"]').click(); showNotification("Select an available seat from the map to reserve.", "info"); });
         document.getElementById('quick-find-book')?.addEventListener('click', () => document.querySelector('.tab-link[data-tab="books-resources"]').click());
