@@ -545,12 +545,12 @@
      document.addEventListener('contextmenu', event => event.preventDefault());
 
   // Disable key combinations
-  document.addEventListener('keydown', function (e) {
+  //document.addEventListener('keydown', function (e) {
     // F12
-    if (e.key === 'F12' || e.keyCode === 123) {
-      e.preventDefault();
-      return false;
-    }
+    //if (e.key === 'F12' || e.keyCode === 123) {
+      //e.preventDefault();
+      //return false;
+    //}
 
     // Ctrl+Shift+I/J/C
     if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
