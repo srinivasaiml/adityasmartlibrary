@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +11,7 @@
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Barcode Scanner Library (QuaggaJS) -->
-<script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+<!-- Barcode Scanner Library (QuaggaJS) has been REMOVED -->
 
 <style>
     :root {
@@ -290,12 +288,35 @@
     
     /* Scanner Page Specific Styles */
     .scanner-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: flex-start; }
-    .scanner-video-container { position: relative; width: 100%; min-height: 400px; background-color: #000; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-color); }
-    #scanner-video { width: 100%; height: auto; }
-    .scanner-video-container .drawing_buffer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .scanner-placeholder { color: var(--text-light); text-align: center; }
-    .scanner-placeholder i { font-size: 5em; margin-bottom: 15px; }
-    .scanner-controls { margin-top: 15px; text-align: center; }
+    /* CHANGE START: This container is now for instructions, not video */
+    .scanner-instruction-container {
+        position: relative;
+        width: 100%;
+        min-height: 400px;
+        background-color: var(--background-color); /* Lighter background */
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border-color);
+    }
+    .scanner-placeholder {
+        color: var(--text-secondary); /* Darker text for better readability */
+        text-align: center;
+    }
+    .scanner-placeholder i {
+        font-size: 6em; /* Make icon larger */
+        margin-bottom: 20px;
+        color: var(--primary-color);
+    }
+    .scanner-placeholder p {
+        font-size: 1.2em;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+    /* CHANGE END */
+    
     #scan-result-display { padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: 600; text-align: center; transition: all 0.3s ease; }
     #scan-result-display.success { background-color: var(--success-bg); color: var(--success-color); border: 1px solid var(--success-color);}
     #scan-result-display.error { background-color: var(--danger-bg); color: var(--danger-color); border: 1px solid var(--danger-color); }
@@ -322,143 +343,61 @@
         }
         .scanner-layout { grid-template-columns: 1fr; }
     }
-
-    /* =================================================================== */
-    /* START: MOBILE RESPONSIVE STYLES (Bottom Navigation Bar)             */
-    /* =================================================================== */
-
+    
     @media (max-width: 768px) {
-    /*
-      First, adjust the main content area. Since the new nav bar will be
-      fixed and overlay the content, we need to add padding at the bottom
-      to ensure no content is permanently hidden.
-    */
     .main-content {
-        margin-left: 0; /* The sidebar is no longer on the side */
-        /* The nav bar is ~65px high. 80px of padding provides a safe buffer. */
+        margin-left: 0;
         padding-bottom: 80px;
-        transition: margin-left 0.3s ease; /* Keep transition for consistency */
+        transition: margin-left 0.3s ease;
     }
-
-    /*
-      Here we completely re-style the sidebar to become the bottom bar.
-    */
     .sidebar {
-        /* Positioning */
         width: 100%;
-        height: auto; /* Height is determined by its content */
-        position: fixed; /* Sticks to the viewport, even on scroll */
-        bottom: 0;       /* Aligns to the bottom of the screen */
+        height: auto;
+        position: fixed;
+        bottom: 0;
         left: 0;
-        top: auto;       /* Important to unset any 'top' positioning */
-        z-index: 1000;   /* Ensures it appears above all other content */
-
-        /* Layout */
+        top: auto;
+        z-index: 1000;
         display: flex;
-        flex-direction: row; /* Arrange items horizontally */
-        padding: 5px 0;      /* Small vertical padding */
-
-        /* Visuals */
+        flex-direction: row;
+        padding: 5px 0;
         background-color: var(--card-bg-color);
         border-top: 1px solid var(--border-color);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08); /* A soft shadow for depth */
-
-        /* Animation */
-        /* This provides a smooth transition if properties change, e.g., on resize */
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease-in-out;
     }
-
-    /* The desktop logo is not needed on the mobile bar */
-    .sidebar .logo {
-        display: none;
-    }
-
-    /* The list of navigation items should fill the entire bar */
-    .sidebar ul {
-        display: flex;
-        flex-grow: 1; /* The <ul> takes all available space */
-        justify-content: space-around; /* Distributes items evenly */
-        align-items: center;
-    }
-
-    /* Each list item acts as a container for our touch target */
-    .sidebar ul li {
-        flex-grow: 1; /* Each item will take up an equal amount of space */
-        text-align: center;
-    }
-
-    /*
-      Styling for each navigation link (our main touch target).
-      This is where the user-facing "animation" happens on tap.
-    */
+    .sidebar .logo { display: none; }
+    .sidebar ul { display: flex; flex-grow: 1; justify-content: space-around; align-items: center; }
+    .sidebar ul li { flex-grow: 1; text-align: center; }
     .sidebar ul li a {
-        flex-direction: column; /* Icon stacks on top of the text */
+        flex-direction: column;
         justify-content: center;
         padding: 8px 5px;
-        font-size: 0.7rem; /* A legible but compact font size for mobile */
+        font-size: 0.7rem;
         height: 100%;
-        border-radius: 8px; /* Rounded corners for the tap feedback background */
-        color: var(--text-secondary); /* Default color for inactive icons */
-
-        /* The "animation" on tap/hover */
+        border-radius: 8px;
+        color: var(--text-secondary);
         transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     }
-
-    /* Styling for the navigation icons */
     .sidebar ul li a i {
-        font-size: 1.4em; /* Make icons prominent and easy to see */
-        margin-right: 0;  /* Remove desktop side margin */
-        margin-bottom: 5px; /* Space between the icon and its text label */
-        width: auto;      /* Reset desktop width */
-        height: 1.5em;    /* Reserve vertical space to prevent layout shifts */
-        line-height: 1;   /* Center the icon within its reserved space */
+        font-size: 1.4em;
+        margin-right: 0;
+        margin-bottom: 5px;
+        width: auto;
+        height: 1.5em;
+        line-height: 1;
     }
-    
-    /* Ensure the text label is always visible */
-    .sidebar ul li a span {
-        display: block;
-        line-height: 1.2;
-        font-weight: 500;
-        white-space: nowrap; /* Prevent long text from wrapping to a new line */
+    .sidebar ul li a span { display: block; line-height: 1.2; font-weight: 500; white-space: nowrap; }
+    .sidebar ul li a.active { color: var(--primary-color); background-color: var(--primary-light-bg); }
+    .sidebar ul li a.active span { font-weight: 700; }
+    .sidebar ul li a:hover { color: var(--primary-color); background-color: var(--primary-light-bg); }
     }
 
-    /*
-      Visual feedback for the ACTIVE link. This is crucial for usability.
-      The .active class is managed by your JavaScript.
-    */
-    .sidebar ul li a.active {
-        color: var(--primary-color);
-        background-color: var(--primary-light-bg);
+    @media (max-width: 360px) {
+    .sidebar ul li a { padding: 6px 2px; }
+    .sidebar ul li a span { font-size: 0.65rem; }
+    .sidebar ul li a i { font-size: 1.3em; }
     }
-    .sidebar ul li a.active span {
-        font-weight: 700; /* Make the active text bold */
-    }
-
-    /*
-      Visual feedback for HOVER (primarily for desktop users who resize their
-      window small). On mobile, this state is often triggered on tap-and-hold.
-    */
-    .sidebar ul li a:hover {
-        color: var(--primary-color);
-        background-color: var(--primary-light-bg);
-    }
-}
-
-/*
-  Additional tweaks for very small screens (320px to 360px),
-  like the iPhone 5/SE, to ensure the UI remains clean.
-*/
-@media (max-width: 360px) {
-    .sidebar ul li a {
-        padding: 6px 2px; /* Reduce padding to save horizontal space */
-    }
-    .sidebar ul li a span {
-        font-size: 0.65rem; /* Make text a tiny bit smaller */
-    }
-    .sidebar ul li a i {
-        font-size: 1.3em; /* Slightly smaller icon to match the text */
-    }
-}
 </style>
 </head>
 <body>
@@ -592,23 +531,21 @@
                 </div>
                 <div class="table-container"><h3>All Activities</h3><table class="theme-table" id="main-activity-log-table"><thead><tr><th>TIME</th><th>USER</th><th>ACTION</th><th>RESOURCE</th><th>DETAILS</th></tr></thead><tbody></tbody></table></div>
             </section>
+            
+            <!-- CHANGE START: Simplified Scanner Section -->
             <section id="scanner-content" class="content-section">
                 <div class="section-header">
                     <h2>Student Seat Scanner</h2>
                 </div>
                 <div class="scanner-layout">
                     <div class="scanner-main-panel">
-                        <div id="scanner-video-container" class="scanner-video-container">
-                            <div class="scanner-placeholder" id="scanner-placeholder-div">
+                        <div id="scanner-instruction-container" class="scanner-instruction-container">
+                            <div class="scanner-placeholder" style="display: flex;">
                                 <i class="fas fa-barcode"></i>
-                                <p>Scan Student ID for Check-in or Check-out.</p>
+                                <p>Ready to Scan.<br>Use your barcode scanner to check students in or out.</p>
                             </div>
-                            <video id="scanner-video" playsinline style="display:none;"></video>
                         </div>
                         <div id="scan-result-display" style="display:none;"></div>
-                        <div class="scanner-controls">
-                            <button class="btn btn-primary" id="toggle-scanner-btn"><i class="fas fa-video"></i> Start Camera</button>
-                        </div>
                     </div>
                     <div class="scanner-log-container">
                         <h3>Recent Scans (This Session)</h3>
@@ -618,6 +555,8 @@
                     </div>
                 </div>
             </section>
+            <!-- CHANGE END -->
+
         </div>
     </main>
 </div>
@@ -793,17 +732,12 @@ const cancelSeminarBookingBtn = document.getElementById('cancel-seminar-booking-
 const confirmSeminarBookingBtn = document.getElementById('confirm-seminar-booking-btn');
 const refreshSeminarRoomsBtn = document.getElementById('refresh-seminar-rooms-btn');
 
-// --- Scanner Page Elements ---
-const scannerVideoContainer = document.getElementById('scanner-video-container');
-const scannerVideo = document.getElementById('scanner-video');
-const scannerPlaceholder = document.getElementById('scanner-placeholder-div');
-const toggleScannerBtn = document.getElementById('toggle-scanner-btn');
+// --- Scanner Page Elements (Simplified) ---
 const scanResultDisplay = document.getElementById('scan-result-display');
 const scannerLog = document.getElementById('scanner-log');
 
 let seatUsageDoughnutChartInstance = null;
 let allSeatsDataGlobal = [];
-let isScannerActive = false;
 
 // --- START: LocalStorage based state management for seminar rooms ---
 const SEMINAR_ROOMS_STORAGE_KEY = 'smartLibrarySeminarRooms';
@@ -904,11 +838,6 @@ populateHourSelects();
 navLinks.forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
-        // If scanner is active and we're navigating away, stop it.
-        if (isScannerActive && this.getAttribute('data-target') !== 'scanner') {
-            stopBarcodeScanner();
-        }
-
         const targetId = this.getAttribute('data-target');
         navLinks.forEach(nav => nav.classList.remove('active')); this.classList.add('active');
         contentSections.forEach(section => section.classList.remove('active'));
@@ -1208,17 +1137,16 @@ cancelBookActionBtn.addEventListener('click', () => bookModal.style.display = 'n
 confirmBookActionBtn.addEventListener('click', async () => { const bookId = bookModalIdInput.value; const title = bookTitleInput.value.trim(); const author = bookAuthorInput.value.trim(); const isbn = bookIsbnInput.value.trim(); const status = bookStatusSelect.value; const rack = bookRackInput.value.trim(); const quantity = parseInt(bookQuantityInput.value, 10); if (!title || !author || !rack) { alert('Please fill in Title, Author, and Rack.'); return; } const payload = { title, author, isbn, status, rack }; let url = `${API_BASE_URL}/books`; let method = 'POST'; if (bookId) { url = `${API_BASE_URL}/books/${bookId}`; method = 'PUT'; } else { if (isNaN(quantity) || quantity < 1) { alert('Valid quantity needed for new book(s).'); return; } payload.quantity = quantity; } confirmBookActionBtn.disabled = true; confirmBookActionBtn.textContent = 'Saving...'; const result = await fetchData(url, `Failed to ${bookId ? 'update' : 'add'} book`, { method, body: payload }); if (result) { bookModal.style.display = 'none'; await fetchAndRenderBooks(); if (document.getElementById('dashboard-content').classList.contains('active')) await loadDashboardData(); } confirmBookActionBtn.disabled = false; confirmBookActionBtn.textContent = 'Save Book'; });
 async function deleteBook(bookId, bookTitle) { if (!confirm(`Delete "${bookTitle}"? This action cannot be undone.`)) return; const result = await fetchData(`${API_BASE_URL}/books/${bookId}`, "Failed to delete book", { method: 'DELETE' }); if (result) { await fetchAndRenderBooks(); if (document.getElementById('dashboard-content').classList.contains('active')) await loadDashboardData(); } }
 async function fetchAllActivities() { const response = await fetchData(`${API_BASE_URL}/activities?limit=100`, "Failed to load all activities"); if (response && response.activities) { populateActivityTable(mainActivityLogTableBody, response.activities); document.getElementById('totalActivitiesStat').innerHTML = `${response.totalActivities || 0} <i class="fas fa-wave-square stat-icon blue"></i>`; const bookActs = response.activities.filter(a => a.resourceType === 'Book').length; const seatActs = response.activities.filter(a => a.resourceType === 'Seat').length; document.getElementById('bookActivitiesStat').innerHTML = `${bookActs} <i class="fas fa-book stat-icon green"></i>`; document.getElementById('seatActivitiesStat').innerHTML = `${seatActs} <i class="fas fa-chair stat-icon blue"></i>`; const usersToday = new Set(response.activities.filter(a => new Date(a.timestamp || a.createdAt).toDateString() === new Date().toDateString() && a.user).map(a => a.user?._id || a.user?.username)).size; document.getElementById('usersActiveTodayStat').innerHTML = `${usersToday} <i class="fas fa-users stat-icon orange"></i>`; } }
-function logoutAdmin(message = "You have been logged out.") { if(isScannerActive) stopBarcodeScanner(); alert(message); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'index.html'; }
+function logoutAdmin(message = "You have been logged out.") { alert(message); localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = 'index.html'; }
 document.getElementById('admin-logout-btn').addEventListener('click', () => logoutAdmin());
 
-// --- BARCODE SCANNER FUNCTIONS (CHECK-IN & CHECK-OUT) ---
+// =========================================================================
+// CHANGE START: Simplified Barcode Scanner Section (External Scanner Only)
+// =========================================================================
 
 function setupScannerPage() {
-    scannerVideo.style.display = 'none';
-    scannerPlaceholder.style.display = 'flex';
-    if(scannerLog.children.length === 1 && scannerLog.children[0].textContent.includes("No scans yet.")) {
-        // Initial state
-    }
+    // This function is now just a placeholder. The page is static and always ready.
+    console.log("Scanner page is active. Ready for barcode input.");
 }
 
 function addToScanLog(message, type = 'info') {
@@ -1237,69 +1165,10 @@ function displayScanResult(message, type = 'info') {
     scanResultDisplay.style.display = 'block';
 }
 
-function startBarcodeScanner() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        alert("Your browser does not support camera access. Please use a modern browser like Chrome or Firefox.");
-        return;
-    }
-    Quagga.init({
-        inputStream: {
-            name: "Live",
-            type: "LiveStream",
-            target: scannerVideoContainer,
-            constraints: { width: 640, height: 480, facingMode: "environment" }
-        },
-        decoder: {
-            readers: ["code_128_reader", "ean_reader", "upc_reader", "code_39_reader", "codabar_reader"]
-        },
-        locate: true,
-    }, function(err) {
-        if (err) {
-            console.error(err);
-            alert("Error initializing camera. Please ensure you have a webcam connected and have granted permission.");
-            return;
-        }
-        console.log("Initialization finished. Ready to start.");
-        Quagga.start();
-        isScannerActive = true;
-        scannerVideo.style.display = 'block';
-        scannerPlaceholder.style.display = 'none';
-        toggleScannerBtn.innerHTML = '<i class="fas fa-stop-circle"></i> Stop Camera';
-        toggleScannerBtn.classList.remove('btn-primary');
-        toggleScannerBtn.classList.add('btn-danger');
-        displayScanResult("Scanning... Point camera at a barcode.", 'info');
-    });
-
-    Quagga.onProcessed(function(result) {
-        const drawingCtx = Quagga.canvas.ctx.overlay;
-        const drawingCanvas = Quagga.canvas.dom.overlay;
-        drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
-        if (result && result.box) {
-            Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "green", lineWidth: 2 });
-        }
-    });
-
-    Quagga.onDetected(handleBarcodeDetected);
-}
-
-function stopBarcodeScanner() {
-    if (isScannerActive) {
-        Quagga.stop();
-        Quagga.offDetected(handleBarcodeDetected);
-        Quagga.offProcessed();
-        isScannerActive = false;
-        scannerVideo.style.display = 'none';
-        scannerPlaceholder.style.display = 'flex';
-        toggleScannerBtn.innerHTML = '<i class="fas fa-video"></i> Start Camera';
-        toggleScannerBtn.classList.remove('btn-danger');
-        toggleScannerBtn.classList.add('btn-primary');
-        scanResultDisplay.style.display = 'none';
-    }
-}
-
-async function handleBarcodeDetected(result) {
-    Quagga.pause();
-    const scannedUsername = result.codeResult.code;
+// --- CORE SCAN PROCESSING LOGIC ---
+async function processStudentScan(scannedUsername) {
+    if(!scannedUsername) return;
+    displayScanResult(`Processing scan for: ${scannedUsername}...`, 'info');
 
     // First, check if the user is already checked in (for CHECK-OUT)
     const checkedInSeat = allSeatsDataGlobal.find(s =>
@@ -1326,7 +1195,7 @@ async function handleBarcodeDetected(result) {
     } else {
         // --- ACTION: CHECK-IN ---
         // If not checked in, check for a reservation
-        const reservation = allSeatsDataGlobal.find(s => 
+        const reservation = allSeatsDataGlobal.find(s =>
             s.status === 'pending-reservation' && s.reservedBy?.username === scannedUsername
         );
 
@@ -1348,8 +1217,8 @@ async function handleBarcodeDetected(result) {
                 addToScanLog(errorMsg, 'error');
             }
         } else {
-            // --- SCENARIO: Walk-in Check-in ---
-            const infoMsg = `MANUALY ENTER: User ${scannedUsername} entered. Please assign a seat manually.`;
+            // --- SCENARIO: Walk-in (No Reservation) ---
+            const infoMsg = `MANUAL ACTION NEEDED: User ${scannedUsername} scanned. No reservation found. Please assign a seat manually if one is available.`;
             displayScanResult(infoMsg, 'info');
             addToScanLog(infoMsg, 'info');
         }
@@ -1357,28 +1226,57 @@ async function handleBarcodeDetected(result) {
 
     // After ANY action, refresh all data to ensure the next scan is accurate.
     await loadDashboardData();
-    if(document.getElementById('seats-content').classList.contains('active')) {
+    if (document.getElementById('seats-content').classList.contains('active')) {
         fetchAndRenderAdminSeats('all');
     }
-
-    // Resume scanning after a 3-second cooldown
-    setTimeout(() => {
-        if(isScannerActive) {
-            Quagga.start();
-            displayScanResult("Scanning... Point camera at a barcode.", 'info');
-        }
-    }, 3000);
 }
 
-if(toggleScannerBtn) {
-    toggleScannerBtn.addEventListener('click', () => {
-        if (isScannerActive) {
-            stopBarcodeScanner();
-        } else {
-            startBarcodeScanner();
+// --- EXTERNAL BARCODE SCANNER (KEYBOARD WEDGE) LISTENER ---
+let barcodeBuffer = [];
+let barcodeTimeout = null;
+
+document.addEventListener('keydown', function(e) {
+    const scannerSection = document.getElementById('scanner-content');
+    if (!scannerSection || !scannerSection.classList.contains('active')) {
+        return;
+    }
+    const anyModalIsOpen = document.querySelector('#admin-seat-action-modal[style*="flex"]') ||
+                           document.querySelector('#book-modal[style*="flex"]') ||
+                           document.querySelector('#seminar-booking-modal[style*="flex"]');
+    if (anyModalIsOpen || (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) {
+        return;
+    }
+    
+    if (['Control', 'Shift', 'Alt', 'Meta', 'Tab'].includes(e.key)) return;
+
+    if (e.key === 'Enter') {
+        if (barcodeBuffer.length > 3) {
+            e.preventDefault();
+            const scannedCode = barcodeBuffer.join('');
+            processStudentScan(scannedCode);
         }
-    });
-}
+        barcodeBuffer = [];
+        clearTimeout(barcodeTimeout);
+        return;
+    }
+
+    if (e.key.length === 1) {
+        barcodeBuffer.push(e.key);
+    }
+    
+    clearTimeout(barcodeTimeout);
+    barcodeTimeout = setTimeout(() => {
+        if (barcodeBuffer.length > 3) {
+            const scannedCode = barcodeBuffer.join('');
+            processStudentScan(scannedCode);
+        }
+        barcodeBuffer = [];
+    }, 150);
+});
+
+// =========================================================================
+// CHANGE END: Simplified Barcode Scanner Section
+// =========================================================================
 
 document.getElementById('exportLogsBtn')?.addEventListener('click', () => alert("Export logs functionality not implemented yet."));
 
@@ -1395,10 +1293,7 @@ if (activeDefaultLink) {
 } else { loadDashboardData(); }
 });
 
-
-
-
-    document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('contextmenu', event => event.preventDefault());
 
   // Disable key combinations
   document.addEventListener('keydown', function (e) {
@@ -1407,25 +1302,21 @@ if (activeDefaultLink) {
       e.preventDefault();
       return false;
     }
-
     // Ctrl+Shift+I/J/C
     if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
       e.preventDefault();
       return false;
     }
-
     // Ctrl+U
     if (e.ctrlKey && e.key.toUpperCase() === 'U') {
       e.preventDefault();
       return false;
     }
-
     // Ctrl+S (to block save page)
     if (e.ctrlKey && e.key.toUpperCase() === 'S') {
       e.preventDefault();
       return false;
     }
-
     // Ctrl+P (to block print)
     if (e.ctrlKey && e.key.toUpperCase() === 'P') {
       e.preventDefault();
